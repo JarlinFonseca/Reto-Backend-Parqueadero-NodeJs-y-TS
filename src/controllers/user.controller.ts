@@ -13,11 +13,8 @@ export class UserController {
     try {
       const data = await this.userService.findAllUser();
       return this.httpResponse.Ok(res, data)
-      if(data.length === 0){
-        return this.httpResponse.NotFound(res, "No existe dato");
-      }
     } catch (e) {
-      return this.httpResponse.Error(res,e);
+      next(e);
     }
   }
 
@@ -47,9 +44,9 @@ export class UserController {
     }
   }
 
-  async createUser(req: Request, res: Response, next: NextFunction) {
+  async savePartner(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await this.userService.createUser(req.body);
+      const data = await this.userService.savePartner(req.body);
       return this.httpResponse.Ok(res, data)
     } catch (e) {
       next(e);

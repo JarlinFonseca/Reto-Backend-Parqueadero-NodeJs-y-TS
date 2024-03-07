@@ -6,7 +6,7 @@ export class ErrorHandlerMiddleware{
 
     constructor(){}
 
-     errorHandler(err: any | ValidationError, req: Request, res: Response, next: NextFunction) {
+     errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
        // console.error(err.stack);
     
 
@@ -19,7 +19,7 @@ export class ErrorHandlerMiddleware{
             res.status(err.status).json(rta)
 
         }else{
-                res.status(500).json({ message: 'Ocurrió un error en el servidor' });
+               res.status(500).json({ message: 'Ocurrió un error en el servidor' });
             }
             
         }

@@ -109,12 +109,7 @@ export class UserService extends BaseService<UserEntity> {
   }
 
 
-  async createUser(body: UserRequestDTO): Promise<UserResponseDTO> {
-    //const rolId = this.rolService.findRolById(this.ID_ROL_SOCIO);
-  //  if(Number(rolId) !== this.ID_ROL_SOCIO){
-    //      throw new ErrorException("El id de rol no es de SOCIO ", 409);
-    //}
-
+  async savePartner(body: UserRequestDTO): Promise<UserResponseDTO> {
     const rol:RolEntity | null  =  await this.rolService.findRolById(this.ID_ROL_SOCIO);
     if (!rol) {
       throw new ErrorException("El rol no fue encontrado", 404);

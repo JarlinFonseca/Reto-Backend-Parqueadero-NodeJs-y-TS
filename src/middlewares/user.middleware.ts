@@ -1,6 +1,6 @@
 ﻿import { NextFunction, Request, Response } from "express";
 import { UserRequestDTO } from "../dto/request/user.request.dto";
-import { ValidationError, validate } from "class-validator";
+import { validate } from "class-validator";
 import { SharedMiddleware } from "../shared/middlewares/shared.middleware";
 
 

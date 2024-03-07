@@ -6,6 +6,8 @@ import { ConfigServer } from "./config/config";
 import { DataSource } from "typeorm";
 import { UserRouter } from "./routers/user.router";
 import { ErrorHandlerMiddleware } from "./shared/middlewares/error.hanlder.middlware";
+import { ParkingLotRouter } from "./routers/parking.lot.router";
+
 
 
 class ServerBootstrap extends ConfigServer {
@@ -30,7 +32,11 @@ class ServerBootstrap extends ConfigServer {
   }
 
   routers(): Array<express.Router> {
-   return [new UserRouter().router,];
+   return [
+    new UserRouter().router,
+    new ParkingLotRouter().router,
+            
+  ];
   }
 
   //passportUse(){
