@@ -25,7 +25,7 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
     );
 
     this.router.post(
-      "/users",
+      "/users/partners",
       (req, res, next) => [this.middleware.userValidator(req, res, next)],
       (req, res, next) => this.controller.createUser(req, res, next)
     );

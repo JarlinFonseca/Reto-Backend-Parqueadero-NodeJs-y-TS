@@ -1,7 +1,7 @@
 ﻿//import passport from "passport";
 import { HttpResponse } from "../response/http.response";
 import { NextFunction, Request, Response } from "express";
-import { RoleType } from "../../dto/user.dto";
+import { RoleType } from "../../dto/request/user.request.dto";
 import { UserEntity } from "../../entities/user.entity";
 import { ErrorHandlerMiddleware } from "./error.hanlder.middlware";
 
