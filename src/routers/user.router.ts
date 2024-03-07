@@ -16,7 +16,7 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
 
     this.router.get(
       "/users/:id",
-      (req, res) => this.controller.getUserById(req, res)
+      (req, res, next) => this.controller.getUserById(req, res, next)
     );
 
     this.router.get(
@@ -27,7 +27,7 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
     this.router.post(
       "/users",
       (req, res, next) => [this.middleware.userValidator(req, res, next)],
-      (req, res) => this.controller.createUser(req, res)
+      (req, res, next) => this.controller.createUser(req, res, next)
     );
     
     // this.router.put(

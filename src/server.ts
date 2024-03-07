@@ -5,6 +5,7 @@ import cors from "cors";
 import { ConfigServer } from "./config/config";
 import { DataSource } from "typeorm";
 import { UserRouter } from "./routers/user.router";
+import { ErrorHandlerMiddleware } from "./shared/middlewares/error.hanlder.middlware";
 
 
 class ServerBootstrap extends ConfigServer {
@@ -23,6 +24,8 @@ class ServerBootstrap extends ConfigServer {
     this.app.use(cors());
 
     this.app.use("/api", this.routers());
+    this.app.use(new ErrorHandlerMiddleware().errorHandler)
+    
     this.listen();
   }
 

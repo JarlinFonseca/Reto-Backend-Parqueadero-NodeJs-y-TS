@@ -1,4 +1,5 @@
 import { IsDate, IsDefined, IsInt, IsNotEmpty, IsOptional, IsUUID, Min } from "class-validator";
+import { RolEntity } from "../entities/rol.entity";
 
 
 export class UserDTO  {
@@ -26,6 +27,9 @@ export class UserDTO  {
   @IsDate()
   @IsOptional()
   createdAt!: Date;
+
+  @IsOptional()
+  rol!: RolEntity;
 
 }
 

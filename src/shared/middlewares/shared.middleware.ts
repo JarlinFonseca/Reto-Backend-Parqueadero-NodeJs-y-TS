@@ -3,9 +3,12 @@ import { HttpResponse } from "../response/http.response";
 import { NextFunction, Request, Response } from "express";
 import { RoleType } from "../../dto/user.dto";
 import { UserEntity } from "../../entities/user.entity";
+import { ErrorHandlerMiddleware } from "./error.hanlder.middlware";
 
-export class SharedMiddleware {
-    constructor(public httpResponse: HttpResponse = new HttpResponse()){}
+export class SharedMiddleware extends ErrorHandlerMiddleware {
+    constructor(public httpResponse: HttpResponse = new HttpResponse()){
+        super();
+    }
 
     //  passAuth(type: string){
     //      return passport.authenticate(type, {session: false});

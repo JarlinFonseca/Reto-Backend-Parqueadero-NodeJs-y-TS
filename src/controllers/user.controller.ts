@@ -2,7 +2,7 @@
 import { UserService } from "../services/user.service";
 import { DeleteResult, UpdateResult } from "typeorm";
 import { HttpResponse } from "../shared/response/http.response";
-import { NotFoundException } from "../exceptions/NotFoundException";
+import { ErrorException } from "../exceptions/ErrorException";
 
 export class UserController {
   constructor(
@@ -21,23 +21,14 @@ export class UserController {
     }
   }
 
-  async getUserById(req: Request, res: Response) {
+  async getUserById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
     try{
- 
       const data = await this.userService.findUserById(Number(id));
-      if(!data){
-       // throw new NotFoundException("No existe data", 400);
-
-        return this.httpResponse.NotFound(res, "No existe dato");
-
-      } 
-      
       return this.httpResponse.Ok(res, data)
-
     } catch (e) {
-        return this.httpResponse.Error(res,e);
+        next(e);
       }
      
     
@@ -56,12 +47,12 @@ export class UserController {
     }
   }
 
-  async createUser(req: Request, res: Response) {
+  async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await this.userService.createUser(req.body);
       return this.httpResponse.Ok(res, data)
     } catch (e) {
-      return this.httpResponse.Error(res,e);
+      next(e);
     }
   }
 
