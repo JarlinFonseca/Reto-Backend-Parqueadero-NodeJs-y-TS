@@ -29,6 +29,16 @@ export class ParkingLotController{
       next(e);
     }
   }
+
+  async getParkingLotById(req: Request, res: Response, next: NextFunction){
+    try{
+      const { id } = req.params;
+      const data = await this.parkingLotService.findParkingLotById(Number(id));
+      return this.httpResponse.Ok(res, data);
+    }catch(e){
+      next(e);
+    }
+  }
  
 
 

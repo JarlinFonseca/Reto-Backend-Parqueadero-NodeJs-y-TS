@@ -43,6 +43,15 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
         return parkingLots;
     }
 
+    async findParkingLotById(id: number):Promise<ParkingLotResponseDto>{
+
+        const parkingLotEntity = await this.findParkingLotByIdWithRelationUser(id);
+        
+        if(!parkingLotEntity) throw new ErrorException("El parqueadero no existe", 404);
+
+        return this.setearDatosParquingResponseDto(parkingLotEntity);
+    }
+
     private async validateUser(id:number):Promise<UserEntity>{
         const userPromise=  this.userService.findUserWithRelationRol(id);
         const user =(await userPromise);
@@ -54,14 +63,13 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
 
 
     private setearDatosParquingResponseDto(parkingLot: ParkingLotEntity): ParkingLotResponseDto {
-        console.log("Entra")
         const parkingLotResponseDto: ParkingLotResponseDto = {
-          id: parkingLot.id,
+          id: Number(parkingLot.id),
           name: parkingLot.name,
           quantityVehiclesMaximum: parkingLot.quantityVehiclesMaximum,
           costHourVehicle: parkingLot.costHourVehicle,
           created_at: parkingLot.created_at,
-          partnerId: parkingLot.user.id
+          partnerId: Number(parkingLot.user.id)
         
       };
       return parkingLotResponseDto;
@@ -73,6 +81,14 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
         .createQueryBuilder('parking_lot')
         .leftJoinAndSelect('parking_lot.user', 'user')
         .getMany();
+      }
+
+      async findParkingLotByIdWithRelationUser(id:number): Promise<ParkingLotEntity | null >{
+        return (await this.parkingLotRepository)
+        .createQueryBuilder('parking_lot')
+        .leftJoinAndSelect('parking_lot.user', 'user')
+        .where({id})
+        .getOne();
       }
 
 }

@@ -19,6 +19,11 @@ export class ParkingLotRouter extends BaseRouter<ParkingLotController,ParkingLot
             (req, res, next) => this.controller.getParkingLots(req, res, next)
           );
 
+          this.router.get(
+            "/parqueaderos/:id",
+            (req, res, next) => this.controller.getParkingLotById(req, res, next)
+          );
+
 
       
 
