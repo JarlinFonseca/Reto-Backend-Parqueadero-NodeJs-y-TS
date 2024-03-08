@@ -36,9 +36,6 @@ export class UserController {
     try {
       const data = await this.userService.findUserWithRelation(id);
       return this.httpResponse.Ok(res, data)
-      if(!data){
-        return this.httpResponse.NotFound(res, "No existe dato");
-      }
     } catch (e) {
       return this.httpResponse.Error(res,e);
     }

@@ -20,6 +20,15 @@ export class ParkingLotController{
       next(err);
     }
   }
+
+  async getParkingLots(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await this.parkingLotService.findAllParkingLots();
+      return this.httpResponse.Ok(res, data)
+    } catch (e) {
+      next(e);
+    }
+  }
  
 
 

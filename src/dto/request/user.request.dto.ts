@@ -4,13 +4,8 @@ import { RolEntity } from "../../entities/rol.entity";
 
 export class UserRequestDTO  {
 
-  @IsInt({ message: 'El campo id debe ser númerico' })
-  @Min(1, { message: 'El campo id debe ser mayor que 1' })
-  @IsOptional()
-  id!: number;
-
   @IsNotEmpty({message: 'El campo name es requerido'})
-  @Matches(/^[a-zA-Z0-9]+$/, { message: 'El campo name debe contener solo letras y números.'})
+  @Matches(/^[a-zA-Z0-9\s]+$/, { message: 'El campo name debe contener solo letras y numeros.'})
   @Length(2, 50, { message: 'El campo name debe tener entre 2 y 50 caracteres.' })
   name!: string;
 
@@ -28,13 +23,6 @@ export class UserRequestDTO  {
 
   @IsNotEmpty({message: 'El campo password es requerido'})
   password!: string;
-
-  @IsDate()
-  @IsOptional()
-  createdAt!: Date;
-
-  @IsOptional()
-  rol!: RolEntity;
 
 }
 

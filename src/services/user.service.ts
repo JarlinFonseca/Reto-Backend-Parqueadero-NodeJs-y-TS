@@ -148,7 +148,7 @@ export class UserService extends BaseService<UserEntity> {
   };
 
   return userResponseDto;
-
+  
   }
 
   async deleteUser(id: number): Promise<DeleteResult> {

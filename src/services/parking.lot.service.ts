@@ -11,7 +11,6 @@ import { UserService } from "./user.service";
 export class ParkingLotService extends BaseService<ParkingLotEntity>{
 
     private parkingLotRepository = this.execRepository;
-
     private userService= new UserService();
     private ID_ROL_SOCIO:number = 2;
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()){
@@ -31,6 +30,19 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
 
     }
 
+    async findAllParkingLots():Promise<ParkingLotResponseDto[]>{
+    const parkingLotsEntity = await this.findAllParkingLotsWithRelationUser();
+
+        let parkingLots: ParkingLotResponseDto[] = [];
+
+         parkingLotsEntity.map((parkingLot) =>{ 
+            const parkinLotResponseDto = this.setearDatosParquingResponseDto(parkingLot)
+            parkingLots.push(parkinLotResponseDto);
+        })
+
+        return parkingLots;
+    }
+
     private async validateUser(id:number):Promise<UserEntity>{
         const userPromise=  this.userService.findUserWithRelationRol(id);
         const user =(await userPromise);
@@ -41,9 +53,8 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
     }
 
 
-
-
     private setearDatosParquingResponseDto(parkingLot: ParkingLotEntity): ParkingLotResponseDto {
+        console.log("Entra")
         const parkingLotResponseDto: ParkingLotResponseDto = {
           id: parkingLot.id,
           name: parkingLot.name,
@@ -53,10 +64,15 @@ export class ParkingLotService extends BaseService<ParkingLotEntity>{
           partnerId: parkingLot.user.id
         
       };
-      console.log(parkingLotResponseDto);
-    
       return parkingLotResponseDto;
-    
+
+      }
+
+      async findAllParkingLotsWithRelationUser(): Promise<ParkingLotEntity[] >{
+        return (await this.parkingLotRepository)
+        .createQueryBuilder('parking_lot')
+        .leftJoinAndSelect('parking_lot.user', 'user')
+        .getMany();
       }
 
 }
