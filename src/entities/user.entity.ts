@@ -26,7 +26,7 @@ export class UserEntity {
       name: "created_at ",
       type: "timestamp",
     })
-    created_at !: Date;
+    created_at!: Date;
 
     @ManyToOne(() => RolEntity, {nullable: false})
     @JoinColumn({ name: "rol_id"})

@@ -47,7 +47,7 @@ export class UserController {
   async savePartner(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await this.userService.savePartner(req.body);
-      return this.httpResponse.Ok(res, data)
+      return this.httpResponse.Created(res, data)
     } catch (e) {
       next(e);
     }

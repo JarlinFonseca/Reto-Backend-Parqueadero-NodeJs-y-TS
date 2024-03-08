@@ -57,6 +57,14 @@ export class UserService extends BaseService<UserEntity> {
     .getOne();
   }
 
+   async findUserWithRelationRol(id: number): Promise<UserEntity | null>{
+    return (await this.userRepository)
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.rol', 'rol')
+    .where({id})
+    .getOne();
+  }
+
   async findByEmail(email: string): Promise<UserEntity | null>{
     return (await this.execRepository)
       .createQueryBuilder('user')
@@ -121,9 +129,9 @@ export class UserService extends BaseService<UserEntity> {
     const hash = await bcrypt.hash(newUser.password, 10);
     newUser.password = hash;
 
-    (await this.execRepository).save(newUser);
+    const userSave = await(await this.execRepository).save(newUser);
 
-    const userResponseDto =  this.setearDatosResponseDto(newUser);
+    const userResponseDto =  this.setearDatosResponseDto(userSave);
 
     return userResponseDto;
   }

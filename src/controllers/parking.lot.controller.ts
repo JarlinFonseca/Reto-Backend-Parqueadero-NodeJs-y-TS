@@ -7,18 +7,16 @@ export class ParkingLotController{
 
     constructor(
         private readonly parkingLotService: ParkingLotService = new ParkingLotService(), 
-        private readonly httpResponse: HttpResponse = new HttpResponse()) {}
+        private readonly httpResponse: HttpResponse = new HttpResponse()
+        ) {}
 
 
     
   async saveParkingLot(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("Entra");
       const data = await this.parkingLotService.saveParkingLot(req.body);
-      console.log(data)
-      return this.httpResponse.Ok(res, data);
+      return this.httpResponse.Created(res, data);
     } catch (err) {
-       // return this.httpResponse.Error(res, err);
       next(err);
     }
   }

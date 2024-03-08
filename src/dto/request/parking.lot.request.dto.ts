@@ -24,7 +24,7 @@ export class ParkingLotRequestDto{
 
     @IsDate()
     @IsOptional()
-    created_at !: Date;
+    created_at!: Date;
 
     @IsNotEmpty({message: 'El id del SOCIO es requerido'})
    // @Matches(/^[0-9]+$/, { message: 'El campo partnerId debe contener números' })
