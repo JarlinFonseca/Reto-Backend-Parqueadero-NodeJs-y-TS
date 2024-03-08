@@ -24,9 +24,3 @@ export class UserRequestDTO  {
   password!: string;
 
 }
-
-export enum RoleType {
-  USER = "USER",
-  CUSTOMER = "CUSTOMER",
-  ADMIN = "ADMIN"
-}

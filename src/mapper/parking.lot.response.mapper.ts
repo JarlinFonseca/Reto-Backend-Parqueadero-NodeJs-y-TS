@@ -11,7 +11,7 @@ export class ParkingLotResponseMapper {
           name: parkingLot.name,
           quantityVehiclesMaximum: parkingLot.quantityVehiclesMaximum,
           costHourVehicle: parkingLot.costHourVehicle,
-          created_at: this.fechaUtils.convertirFechaUtcAColombia(parkingLot.created_at),
+          createdAt: this.fechaUtils.convertirFechaUtcAColombia(parkingLot.createdAt),
           partnerId: Number(parkingLot.user.id)
         
       };

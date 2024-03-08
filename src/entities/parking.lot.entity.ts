@@ -20,7 +20,7 @@ export class ParkingLotEntity {
         name: "created_at ",
         type: "timestamp",
       })
-    created_at !: Date;
+    createdAt!: Date;
 
     @ManyToOne(()=> UserEntity, {nullable:false})
     @JoinColumn({name: 'user_id'})

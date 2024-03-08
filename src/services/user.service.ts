@@ -31,7 +31,7 @@ export class UserService  {
       throw new ErrorException(`El usuario con ID: ${id} no existe`, 404);
     }
     
-    return this.userReponseMapper.toResponse(userEntity);;
+    return this.userReponseMapper.toResponse(userEntity);
   }
 
  

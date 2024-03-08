@@ -5,7 +5,7 @@ export class ParkingLotResponseDto {
     name!: string;
     quantityVehiclesMaximum!: number;
     costHourVehicle!: number;
-    created_at!: string;
+    createdAt!: string;
     partnerId!: number;
     
 }

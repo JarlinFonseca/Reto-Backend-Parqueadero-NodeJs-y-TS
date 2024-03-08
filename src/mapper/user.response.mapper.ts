@@ -12,7 +12,7 @@ export class UserResponseMapper {
             lastname: user.lastname,
             dni: user.dni,
             email: user.email,
-            createdAt: this.fechaUtils.convertirFechaUtcAColombia(user.created_at),
+            createdAt: this.fechaUtils.convertirFechaUtcAColombia(user.createdAt),
             rol: user.rol
         };
 
