@@ -2,7 +2,7 @@ import { EntityTarget, ObjectLiteral, Repository } from "typeorm";
 
 import { ConfigServer } from "./config";
 
-export class BaseService<T extends ObjectLiteral> extends ConfigServer {
+export class BaseRepository<T extends ObjectLiteral> extends ConfigServer {
 
   public execRepository: Promise<Repository<T>>;
   

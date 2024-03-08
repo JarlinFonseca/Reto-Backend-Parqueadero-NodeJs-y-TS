@@ -31,15 +31,6 @@ export class UserController {
     
   }
 
-  async getUserWithRelationById(req: Request, res: Response) {
-    const { id } = req.params;
-    try {
-      const data = await this.userService.findUserWithRelation(id);
-      return this.httpResponse.Ok(res, data)
-    } catch (e) {
-      return this.httpResponse.Error(res,e);
-    }
-  }
 
   async savePartner(req: Request, res: Response, next: NextFunction) {
     try {

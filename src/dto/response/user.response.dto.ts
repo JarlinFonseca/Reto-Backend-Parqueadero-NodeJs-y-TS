@@ -8,7 +8,7 @@ export class UserResponseDTO  {
   lastname!: string;
   dni!: string;
   email!: string;
-  createdAt!: Date;
+  createdAt!: string;
   rol!: RolEntity;
 }
 

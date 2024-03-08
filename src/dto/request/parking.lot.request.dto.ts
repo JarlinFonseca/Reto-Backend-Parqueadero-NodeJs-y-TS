@@ -1,5 +1,4 @@
-﻿import { IsDate, IsInt, IsNotEmpty, IsOptional, Length, Matches, Min } from "class-validator";
-import { UserEntity } from "../../entities/user.entity";
+﻿import { IsNotEmpty, Length, Matches, Min } from "class-validator";
 
 export class ParkingLotRequestDto{
 

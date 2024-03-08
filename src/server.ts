@@ -35,7 +35,7 @@ class ServerBootstrap extends ConfigServer {
    return [
     new UserRouter().router,
     new ParkingLotRouter().router,
-            
+
   ];
   }
 

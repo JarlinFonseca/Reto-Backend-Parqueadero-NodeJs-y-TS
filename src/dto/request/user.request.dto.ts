@@ -1,5 +1,4 @@
-import {IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, Length, Matches, Min, MinLength } from "class-validator";
-import { RolEntity } from "../../entities/rol.entity";
+import {IsEmail, IsNotEmpty, Length, Matches } from "class-validator";
 
 
 export class UserRequestDTO  {
