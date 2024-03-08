@@ -1,21 +1,22 @@
-﻿import { ParkingLotRequestDto } from "../dto/request/parking.lot.request.dto";
+﻿import { DeleteResult, UpdateResult } from "typeorm";
+import { ParkingLotRequestDto } from "../dto/request/parking.lot.request.dto";
 import { ParkingLotResponseDto } from "../dto/response/parking.lot.response.dto";
-import { UserResponseDTO } from "../dto/response/user.response.dto";
-import { ParkingLotEntity } from "../entities/parking.lot.entity";
 import { UserEntity } from "../entities/user.entity";
 import { ErrorException } from "../exceptions/ErrorException";
+import { ParkingLotResponseMapper } from "../mapper/parking.lot.response.mapper";
 import { ParkingLotRepository } from "../repositories/parking.lot.repository";
 import { UserRepository } from "../repositories/user.repository";
 import { HttpResponse } from "../shared/response/http.response";
-import { FechaUtils } from "../shared/util/fecha.utils";
-import { UserService } from "./user.service";
+import { ParkingLotEntity } from "../entities/parking.lot.entity";
+
 
 export class ParkingLotService{
 
     private parkingLotRepository = new ParkingLotRepository();
     private userRepository= new UserRepository();
+    private parkingLotResponseMapper:ParkingLotResponseMapper = new ParkingLotResponseMapper();
     private ID_ROL_SOCIO:number = 2;
-    private fechaUtils = new FechaUtils();
+
 
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()){}
 
@@ -28,7 +29,7 @@ export class ParkingLotService{
 
         const parkingLot = await (await this.parkingLotRepository.execRepository).save(newParkingLot);
        
-        return this.setearDatosParquingResponseDto(parkingLot)
+        return this.parkingLotResponseMapper.toResponse(parkingLot)
     }
 
     async findAllParkingLots():Promise<ParkingLotResponseDto[]>{
@@ -37,7 +38,7 @@ export class ParkingLotService{
         let parkingLots: ParkingLotResponseDto[] = [];
 
          parkingLotsEntity.map((parkingLot) =>{ 
-            const parkinLotResponseDto = this.setearDatosParquingResponseDto(parkingLot)
+            const parkinLotResponseDto = this.parkingLotResponseMapper.toResponse(parkingLot)
             parkingLots.push(parkinLotResponseDto);
         })
 
@@ -50,7 +51,34 @@ export class ParkingLotService{
         
         if(!parkingLotEntity) throw new ErrorException("El parqueadero no existe", 404);
 
-        return this.setearDatosParquingResponseDto(parkingLotEntity);
+        return this.parkingLotResponseMapper.toResponse(parkingLotEntity);
+    }
+
+    async updateParkingLot(id:number, infoUpdate:ParkingLotRequestDto):Promise<ParkingLotResponseDto>{
+        const parkingLotEntity = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(id));
+        if(!parkingLotEntity) throw new ErrorException("El parqueadero no existe", 404);
+        
+        const userEntity = await (await this.userRepository.execRepository).findOneBy({id:infoUpdate.partnerId})
+        if(!userEntity) throw new ErrorException("El usuario no existe", 404);
+
+        parkingLotEntity.name=infoUpdate.name;
+        parkingLotEntity.quantityVehiclesMaximum= infoUpdate.quantityVehiclesMaximum;
+        parkingLotEntity.costHourVehicle= infoUpdate.costHourVehicle;
+        parkingLotEntity.user = userEntity;
+
+        const parkingLotSave:ParkingLotEntity = await (await (this.parkingLotRepository.execRepository)).save(parkingLotEntity);
+        return this.parkingLotResponseMapper.toResponse(parkingLotSave);
+    }
+
+    async deleteParkingLot(id:number):Promise<void>{
+        const parkingLotEntity = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(id));
+        if(!parkingLotEntity) throw new ErrorException("El parqueadero no existe", 404);
+
+        const data: DeleteResult = await (await this.parkingLotRepository.execRepository).delete(id);
+        if(!data.affected){
+           throw new ErrorException("Hay un error al eliminar", 409);
+          }
+
     }
 
 
@@ -63,19 +91,5 @@ export class ParkingLotService{
         return user;
     }
 
-
-    private setearDatosParquingResponseDto(parkingLot: ParkingLotEntity): ParkingLotResponseDto {
-        const parkingLotResponseDto: ParkingLotResponseDto = {
-          id: Number(parkingLot.id),
-          name: parkingLot.name,
-          quantityVehiclesMaximum: parkingLot.quantityVehiclesMaximum,
-          costHourVehicle: parkingLot.costHourVehicle,
-          created_at: this.fechaUtils.convertirFechaUtcAColombia(parkingLot.created_at),
-          partnerId: Number(parkingLot.user.id)
-        
-      };
-      return parkingLotResponseDto;
-
-      }
 
 }

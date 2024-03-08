@@ -2,6 +2,7 @@
 
 import { HttpResponse } from "../shared/response/http.response";
 import { ParkingLotService } from "../services/parking.lot.service";
+import { UpdateResult } from "typeorm";
 
 export class ParkingLotController{
 
@@ -39,7 +40,29 @@ export class ParkingLotController{
       next(e);
     }
   }
+
+    async updateParkingLot(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    try {
+      const data = await this.parkingLotService.updateParkingLot(Number(id), req.body);
+      return this.httpResponse.Ok(res, data)
+    } catch (e) {
+      next(e)};
+    }
+
+    
+  async deleteParkingLot(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    try {
+      const data = await this.parkingLotService.deleteParkingLot(Number(id));
+      return this.httpResponse.NoContent(res);
+    } catch (e) {
+      next(e);
+    }
+  }
+  }
+
+  
  
 
 
-}

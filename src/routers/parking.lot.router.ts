@@ -24,6 +24,17 @@ export class ParkingLotRouter extends BaseRouter<ParkingLotController,ParkingLot
             (req, res, next) => this.controller.getParkingLotById(req, res, next)
           );
 
+          this.router.put(
+            "/parqueaderos/:id",
+            (req, res, next) => [this.middleware.parkingLotValidator(req, res, next)],
+            (req, res, next) => this.controller.updateParkingLot(req, res, next)
+          );
+
+          this.router.delete(
+            "/parqueaderos/:id",
+            (req, res, next) => this.controller.deleteParkingLot(req, res, next)
+          );
+
       }
 
 

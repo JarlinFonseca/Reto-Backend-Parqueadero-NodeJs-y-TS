@@ -7,7 +7,6 @@ import { HttpResponse } from "../shared/response/http.response";
 import { ErrorException } from "../exceptions/ErrorException";
 import { RolService } from "./rol.service";
 import { RolEntity } from "../entities/rol.entity";
-import { FechaUtils } from "../shared/util/fecha.utils";
 import { UserRepository } from "../repositories/user.repository";
 import { UserResponseMapper } from "../mapper/user.response.mapper";
 
@@ -69,7 +68,7 @@ export class UserService  {
     newUser.password = hash;
 
     const userSave = await(await this.userRepository.execRepository).save(newUser);
-    
+
     return this.userReponseMapper.toResponse(userSave);
   }
 

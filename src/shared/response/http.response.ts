@@ -3,6 +3,7 @@
 enum HttpStatus{
     OK = 200,
     CREATED = 201,
+    NO_CONTENT =204,
     NOT_FOUND = 404,
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
@@ -16,6 +17,10 @@ export class HttpResponse{
 
     Created(res: Response, data?: any): Response{
         return res.status(HttpStatus.CREATED).json(data);
+    }
+
+    NoContent(res: Response): Response{
+        return res.status(HttpStatus.NO_CONTENT).send();
     }
 
     NotFound(res: Response, data?: any): Response{
