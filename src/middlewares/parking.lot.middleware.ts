@@ -42,7 +42,6 @@ export class ParkingLotMiddleware extends SharedMiddleware {
 
                         allErrors[propertyName] = constraintMessages;
 
-
                     }
                 });
 

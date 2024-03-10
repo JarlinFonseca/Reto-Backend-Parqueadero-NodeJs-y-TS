@@ -10,8 +10,10 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
 
   routes(): void {
 
-    this.router.get("/users", (req, res, next) =>
-      this.controller.getUsers(req, res, next)
+    this.router.get("/users", 
+    (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+    (req, res, next) => [this.middleware.checkAdminRole(req, res, next)],
+    (req, res, next) => this.controller.getUsers(req, res, next)
     );
 
     this.router.get(
