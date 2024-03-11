@@ -1,5 +1,8 @@
 ﻿import { EntryVehicleParkingLotRequestDto } from "../dto/request/entry.vehicle.parking.lot.request.dto";
+import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.parking.lot.request.dto";
 import { EntryVehicleParkingLotResponseDto } from "../dto/response/entry.vehicle.parking.lot.response.dto";
+import { ExitVehicleParkingLotResponseDto } from "../dto/response/exit.vehicle.parking.lot.response.dto";
+import { HistoryEntity } from "../entities/history.entity";
 import { ParkingLotVehicleEntity } from "../entities/parking.lot.vehicle.entity";
 import { ErrorException } from "../exceptions/ErrorException";
 import { ParkingLotRepository } from "../repositories/parking.lot.repository";
@@ -22,7 +25,7 @@ export class ParkingLotVehicleService {
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()) { }
 
 
-    async registerVehicleEntry(entryVehicleParkingLotRequestDto: EntryVehicleParkingLotRequestDto, tokenJwt: string): Promise<EntryVehicleParkingLotResponseDto | null> {
+    async registerVehicleEntry(entryVehicleParkingLotRequestDto: EntryVehicleParkingLotRequestDto, tokenJwt: string): Promise<EntryVehicleParkingLotResponseDto > {
         await this.verifyPartnerAuth(entryVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
         const countMaxVehicles = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(entryVehicleParkingLotRequestDto.parkingLotId))!.quantityVehiclesMaximum;
         const currentVehicleQuantity = await this.parkingLotVehicleRepository.getCountVehiclesParkingLot(entryVehicleParkingLotRequestDto.parkingLotId);
@@ -52,6 +55,61 @@ export class ParkingLotVehicleService {
 
         return entryVehicleParkingLotResponseDto;
 
+    }
+
+    async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string):Promise<ExitVehicleParkingLotResponseDto | null>{
+
+        const idPartnerAuth =  await this.verifyPartnerAuth(exitVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
+
+        const placa:string = exitVehicleParkingLotRequestDto.placa.toUpperCase();
+        const vehicle = await this.vehicleServie.getVehicleByPlaca(placa);
+        if(!await this.vehicleServie.verifyExistVehicle(vehicle)) throw new ErrorException("No se puede Registrar Salida, no existe la placa en el parqueadero", 409);
+
+        const parkingLotVehicle = await this.parkingLotVehicleRepository.findByVehicleIdAndActiveEntryFlag(vehicle!.id, true);
+        if(!parkingLotVehicle) throw new ErrorException("El vehiculo no se encontro parqueado", 409)
+        if(Number(parkingLotVehicle!.parkingLot.id) !== exitVehicleParkingLotRequestDto.parkingLotId) throw new ErrorException("El vehiculo no pertenece al parqueadero dado", 409);
+
+        if(idPartnerAuth !== parkingLotVehicle!.parkingLot.user.id) throw new ErrorException("El usuario autenticado no es SOCIO del parqueadero", 409);
+
+        const departureDate = this.fechaUtils.fechaActualColombia();
+        const entryDate = parkingLotVehicle!.createdEntry;
+
+        const costHourVehicle = parkingLotVehicle!.parkingLot.costHourVehicle;
+        let hours = this.getHours(entryDate, departureDate);
+
+        if(hours < 1) hours=1.0;
+        let paymentTotal = (hours*costHourVehicle);
+        paymentTotal = Math.round(hours * costHourVehicle);
+
+       const history = new HistoryEntity();
+       history.entryDate= entryDate;
+       history.departureDate = departureDate;
+       history.totalPayment = paymentTotal;
+
+       console.log(history)
+
+
+        parkingLotVehicle!.activeEntryFlag = true;
+       // (await this.parkingLotVehicleRepository.execRepository).save(parkingLotVehicle)
+
+        history.parkingLotVehicle = parkingLotVehicle;
+
+        
+        
+
+
+        return null;
+
+
+
+    }
+
+    private getHours(entryDate: Date, departureDate: Date){
+        const initialTime = entryDate.getTime();
+        const finalTime = departureDate.getTime();
+        let rest = (finalTime - initialTime);
+        rest =rest / 3600000;
+        return rest;
     }
 
     private async verifyPartnerAuth(parkingLotId: number, tokenJwt: string): Promise<number> {

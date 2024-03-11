@@ -3,6 +3,7 @@ import { SharedMiddleware } from "../shared/middlewares/shared.middleware";
 import { validate } from "class-validator";
 import { ParkingLotRequestDto } from "../dto/request/parking.lot.request.dto";
 import { EntryVehicleParkingLotRequestDto } from "../dto/request/entry.vehicle.parking.lot.request.dto";
+import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.parking.lot.request.dto";
 
 export class ParkingLotVehicleMiddleware extends SharedMiddleware {
 
@@ -10,7 +11,7 @@ export class ParkingLotVehicleMiddleware extends SharedMiddleware {
         super();
     }
 
-    parkingLotVehicleValidator(req: Request, res: Response, next: NextFunction) {
+    parkingLotVehicleEntryValidator(req: Request, res: Response, next: NextFunction) {
         const { placa, parkingLotId } =
             req.body;
 
@@ -19,7 +20,24 @@ export class ParkingLotVehicleMiddleware extends SharedMiddleware {
         valid.placa = placa;
         valid.parkingLotId = parkingLotId
 
+        this.validateFields(valid, res, next);
 
+    }
+
+    parkingLotVehicleExitValidator(req: Request, res: Response, next: NextFunction) {
+        const { placa, parkingLotId } =
+            req.body;
+
+        const valid = new ExitVehicleParkingLotRequestDto();
+
+        valid.placa = placa;
+        valid.parkingLotId = parkingLotId
+
+        this.validateFields(valid, res, next);
+
+    }
+
+    private validateFields(valid:EntryVehicleParkingLotRequestDto|ExitVehicleParkingLotRequestDto, res: Response, next: NextFunction ){
 
         validate(valid).then((err) => {
             if (err.length > 0) {
@@ -51,7 +69,6 @@ export class ParkingLotVehicleMiddleware extends SharedMiddleware {
                 next();
             }
         })
-
 
     }
 

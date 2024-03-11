@@ -24,6 +24,7 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
         .createQueryBuilder('parkingLotVehicle')
         .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
         .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
+        .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
         .where({
             vehicle: { id: vehicleId }, // Usando la relación vehicle y su id
             activeEntryFlag,
