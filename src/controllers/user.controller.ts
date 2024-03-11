@@ -69,4 +69,14 @@ export class UserController {
       return this.httpResponse.Error(res,e);
     }
   }
+
+  async executeScript(req: Request, res: Response, next: NextFunction){
+    try {
+      const data = await this.userService.executeScript();
+      return this.httpResponse.Ok(res, data)
+    } catch (e) {
+      next(e);
+    }
+
+  }
 }

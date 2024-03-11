@@ -10,6 +10,7 @@ import { ParkingLotRouter } from "./routers/parking.lot.router";
 import { LoginStrategy } from "./auth/strategies/login.strategy";
 import { JwtStrategy } from "./auth/strategies/jwt.strategy";
 import { AuthRouter } from "./auth/auth.router";
+import { ParkingLotVehicleRouter } from "./routers/parking.lot.vehicle.router";
 
 
 
@@ -39,6 +40,7 @@ class ServerBootstrap extends ConfigServer {
     new UserRouter().router,
     new ParkingLotRouter().router,
     new AuthRouter().router,
+    new ParkingLotVehicleRouter().router,
 
   ];
   }

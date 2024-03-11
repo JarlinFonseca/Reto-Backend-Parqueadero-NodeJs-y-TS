@@ -27,6 +27,11 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
       (req, res, next) => [this.middleware.userValidator(req, res, next)],
       (req, res, next) => this.controller.savePartner(req, res, next)
     );
+
+    this.router.post(
+      "/script-sql",
+      (req, res, next) => this.controller.executeScript(req, res, next)
+    );
     
     // this.router.put(
     //   "/users/update/:id",

@@ -12,7 +12,7 @@ export class ParkingLotVehicleEntity{
         name: "created_entry",
         type: "timestamp",
       })
-    created_entry!: Date;
+    createdEntry!: Date;
 
     @Column({name: 'active_entry_flag'})
     activeEntryFlag!: boolean;

@@ -23,7 +23,7 @@ export class UserEntity {
     password!: string;
 
     @CreateDateColumn({
-      name: "created_at ",
+      name: "created_at",
       type: "timestamp",
     })
     createdAt!: Date;
@@ -31,11 +31,6 @@ export class UserEntity {
     @ManyToOne(() => RolEntity, {nullable: false})
     @JoinColumn({ name: "rol_id"})
     rol!: RolEntity;
-
-
-
-
     
-
 
 }

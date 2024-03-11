@@ -1,5 +1,5 @@
 ﻿import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ParkingLotVehicleEntity } from "./parking.lot.vehicles.entity";
+import { ParkingLotVehicleEntity } from "./parking.lot.vehicle.entity";
 
 @Entity({name: 'history'})
 export class HistoryEntity{

@@ -7,4 +7,9 @@ export class FechaUtils{
         return fechaColombia;
       }
 
+      fechaActualColombia(): Date{
+        return moment().tz('America/Bogota').toDate();
+
+      }
+
 }
