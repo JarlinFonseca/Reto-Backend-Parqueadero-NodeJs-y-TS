@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d06966eb-40a6-4898-bbd1-d9704fa16da1",
+		"_postman_id": "eee6294f-9860-4ba2-aa84-e2975efc0421",
 		"name": "Reto Nelumbo Nodejs y Ts",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26017480"
+		"_exporter_id": "25629549"
 	},
 	"item": [
 		{
@@ -12,16 +12,27 @@
 				{
 					"name": "Get users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbmRyZXNAZ21haWwuY29tIiwiaWQiOiI0IiwibmFtZSI6IkFuZHJlcyIsInJvbCI6IkFETUlOIiwiaWRlbnRpZmljYXRvciI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpsYldGcGJDSTZJbUZ1WkhKbGMwQm5iV0ZwYkM1amIyMGlMQ0pwWkNJNklqUWlMQ0p1WVcxbElqb2lRVzVrY21Weklpd2ljbTlzSWpwN0ltbGtJam9pTVNJc0ltNWhiV1VpT2lKQlJFMUpUaUlzSW1SbGMyTnlhWEIwYVc5dUlqb2lVbTlzSUdSbElFRkVUVWxPSW4wc0ltbGhkQ0k2TVRjeE1ERXhOVEl4TXl3aVpYaHdJam94TnpFd01UTTJPREV6ZlEuU0FJeUROU0VNM0JGN3dyZHI1bmFtSTgwS0dkVDZ4eGtraXowV2s2ZU1YYyIsImlhdCI6MTcxMDExNTIxMywiZXhwIjoxNzEwMTM2ODEzfQ.tTdafOG9WJ020BnpwJp8Hd2fBrTbq4fWb34bjLtk95A",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8085/api/users",
+							"raw": "localhost:8085/api/v1/users",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"users"
 							]
 						}
@@ -34,13 +45,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8085/api/users/7",
+							"raw": "localhost:8085/api/v1/users/7",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"7"
 							]
@@ -68,13 +80,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8085/api/usuarios/socios",
+							"raw": "localhost:8085/api/v1/usuarios/socios",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"usuarios",
 								"socios"
 							]
@@ -97,13 +110,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8085/api/parqueaderos",
+							"raw": "localhost:8085/api/v1/parqueaderos",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"parqueaderos"
 							]
 						}
@@ -116,13 +130,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8085/api/parqueaderos",
+							"raw": "localhost:8085/api/v1/parqueaderos",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"parqueaderos"
 							]
 						}
@@ -135,13 +150,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8085/api/parqueaderos/9",
+							"raw": "localhost:8085/api/v1/parqueaderos/9",
 							"host": [
 								"localhost"
 							],
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"parqueaderos",
 								"9"
 							]
@@ -174,7 +190,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/parqueaderos/10",
+							"raw": "http://localhost:8085/api/v1/parqueaderos/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -182,6 +198,7 @@
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"parqueaderos",
 								"10"
 							]
@@ -205,7 +222,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8085/api/parqueaderos/13",
+							"raw": "http://localhost:8085/api/v1/parqueaderos/13",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -213,8 +230,103 @@
 							"port": "8085",
 							"path": [
 								"api",
+								"v1",
 								"parqueaderos",
 								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"lucasfelipe@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login ADMIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"andres@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbmRyZXNAZ21haWwuY29tIiwiaWQiOiI0IiwibmFtZSI6IkFuZHJlcyIsInJvbCI6IkFETUlOIiwiaWRlbnRpZmljYXRvciI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpsYldGcGJDSTZJbUZ1WkhKbGMwQm5iV0ZwYkM1amIyMGlMQ0pwWkNJNklqUWlMQ0p1WVcxbElqb2lRVzVrY21Weklpd2ljbTlzSWpwN0ltbGtJam9pTVNJc0ltNWhiV1VpT2lKQlJFMUpUaUlzSW1SbGMyTnlhWEIwYVc5dUlqb2lVbTlzSUdSbElFRkVUVWxPSW4wc0ltbGhkQ0k2TVRjeE1ERXhOVEl4TXl3aVpYaHdJam94TnpFd01UTTJPREV6ZlEuU0FJeUROU0VNM0JGN3dyZHI1bmFtSTgwS0dkVDZ4eGtraXowV2s2ZU1YYyIsImlhdCI6MTcxMDExNTIxMywiZXhwIjoxNzEwMTM2ODEzfQ.tTdafOG9WJ020BnpwJp8Hd2fBrTbq4fWb34bjLtk95A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/v1/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
 							]
 						}
 					},
