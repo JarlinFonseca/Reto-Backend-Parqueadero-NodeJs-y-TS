@@ -3,7 +3,6 @@ import { Strategy as LocalStrategy, VerifyFunction } from "passport-local";
 import { AuthService } from "../services/auth.service";
 import { PassportUse } from "../utils/passport.use";
 import { UserEntity } from "../../entities/user.entity";
-import { ErrorException } from "../../exceptions/ErrorException";
 
 const authService: AuthService = new AuthService();
 
@@ -21,8 +20,6 @@ export class LoginStrategy {
         }
 
         return done(null, user);
-
-
     }
 
     get use() {
