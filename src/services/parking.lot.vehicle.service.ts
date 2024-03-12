@@ -2,6 +2,8 @@
 import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.parking.lot.request.dto";
 import { EntryVehicleParkingLotResponseDto } from "../dto/response/entry.vehicle.parking.lot.response.dto";
 import { ExitVehicleParkingLotResponseDto } from "../dto/response/exit.vehicle.parking.lot.response.dto";
+import { ParkingLotResponseDto } from "../dto/response/parking.lot.response.dto";
+import { VehicleParkedResponseDto } from "../dto/response/vehicle.parked.response.dto";
 import { HistoryEntity } from "../entities/history.entity";
 import { ParkingLotVehicleEntity } from "../entities/parking.lot.vehicle.entity";
 import { ErrorException } from "../exceptions/ErrorException";
@@ -11,6 +13,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { HttpResponse } from "../shared/response/http.response";
 import { FechaUtils } from "../shared/util/fecha.utils";
 import { HistoryService } from "./history.service";
+import { ParkingLotService } from "./parking.lot.service";
 import { TokenService } from "./token.service";
 import { VehicleService } from "./vehicle.service";
 
@@ -22,6 +25,7 @@ export class ParkingLotVehicleService {
     private tokenService: TokenService = new TokenService();
     private vehicleServie: VehicleService = new VehicleService();
     private historyService: HistoryService = new HistoryService();
+    private parkingLotService: ParkingLotService= new ParkingLotService();
     private fechaUtils: FechaUtils = new FechaUtils();
 
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()) { }
@@ -63,7 +67,7 @@ export class ParkingLotVehicleService {
 
     }
 
-    async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string): Promise<ExitVehicleParkingLotResponseDto | null> {
+    async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string): Promise<ExitVehicleParkingLotResponseDto> {
 
         const idPartnerAuth = await this.verifyPartnerAuth(exitVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
 
@@ -102,6 +106,21 @@ export class ParkingLotVehicleService {
         return new ExitVehicleParkingLotResponseDto("Salida registrada");
     }
 
+    async getVehiclesParkedByParkingLotId(parkingLotId: number, tokenJwt: string):Promise<VehicleParkedResponseDto[]>{
+        if(await this.isRolSocio(tokenJwt)) await this.verifyPartnerAuth(parkingLotId, tokenJwt);
+        if(!await this.parkingLotService.verifyExistParkingLot(parkingLotId)) throw new ErrorException("El parqueadero no existe", 404);
+
+        const parkingLotVehicles = await this.parkingLotVehicleRepository.findAllByParkingLotIdAndActiveEntryFlag(parkingLotId, true);
+
+        return parkingLotVehicles!.map((parkingLotVehicle)=>{
+           const vehicleParkedResponseDto = new VehicleParkedResponseDto();
+           vehicleParkedResponseDto.id = parkingLotVehicle.id;
+           vehicleParkedResponseDto.placa = parkingLotVehicle.vehicle.placa;
+           vehicleParkedResponseDto.entryDate = this.fechaUtils.convertirFechaUtcAColombia(parkingLotVehicle.createdEntry);
+           return vehicleParkedResponseDto;
+        });
+    }
+
     private getHours(entryDate: Date, departureDate: Date) {
         const initialTime = entryDate.getTime();
         const finalTime = departureDate.getTime();
@@ -121,6 +140,12 @@ export class ParkingLotVehicleService {
         if (idPartnerAuth != idPartnerParkingLot) throw new ErrorException("No es socio del parqueadero", 409);
 
         return idPartnerAuth;
+    }
+
+    private async isRolSocio(tokenJwt: string):Promise<boolean>{
+        if (!tokenJwt) throw new ErrorException("No existe el token JWT", 409);
+        const rolPartnerAuth = await this.tokenService.getRolFromToken(tokenJwt);
+        return rolPartnerAuth === "SOCIO";
     }
 
 

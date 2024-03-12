@@ -1,6 +1,7 @@
 ﻿import { NextFunction, Request, Response } from "express";
 import { HttpResponse } from "../shared/response/http.response";
 import { ParkingLotService } from "../services/parking.lot.service";
+import { ErrorException } from "../exceptions/ErrorException";
 
 export class ParkingLotController {
 
@@ -42,6 +43,23 @@ export class ParkingLotController {
     this.parkingLotService.deleteParkingLot(Number(id))
       .then(() => { return this.httpResponse.NoContent(res); })
       .catch((err) => next(err));
+  }
+
+  getParkingLotsPartner(req: Request, res: Response, next: NextFunction){
+    try {
+      const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
+      if (!tokenJwt) {
+        throw new ErrorException("Token JWT no proporcionado", 409);
+      }
+      this.parkingLotService.getParkingLotsPartner(tokenJwt)
+      .then((data) => { return this.httpResponse.Ok(res, data)})
+      .catch((err) => next(err));
+    } catch (err) {
+      next(err);
+    }
+
+
+      
   }
 }
 

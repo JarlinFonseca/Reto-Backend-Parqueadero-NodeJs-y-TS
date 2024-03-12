@@ -21,4 +21,12 @@ export class ParkingLotRepository extends BaseRepository<ParkingLotEntity>{
         .where({id})
         .getOne();
       }
+
+      async findAllParkingLotByUserId(userId:number): Promise<ParkingLotEntity[]>{
+        return (await this.execRepository)
+        .createQueryBuilder('parking_lot')
+        .leftJoinAndSelect('parking_lot.user', 'user')
+        .where({ user: { id: userId }})
+        .getMany();
+      }
 }

@@ -40,7 +40,19 @@ export class ParkingLotVehicleController {
     }
   }
 
-
-
+  getVehiclesParkedByParkingLotId(req: Request, res: Response, next: NextFunction){
+    try {
+      const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
+      if (!tokenJwt) {
+        throw new ErrorException("Token JWT no proporcionado", 409);
+      }
+      const { id } = req.params;
+      this.parkingLotVehicleService.getVehiclesParkedByParkingLotId(Number(id), tokenJwt)
+        .then((data) => { return this.httpResponse.Ok(res, data) })
+        .catch((err) => next(err));
+    } catch (err) {
+      next(err);
+    }
+  }
 
 }

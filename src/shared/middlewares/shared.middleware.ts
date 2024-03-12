@@ -64,6 +64,7 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
 
 
     checkSocioRole(req: Request, res: Response, next: NextFunction) {
+        console.log("Check socio role")
         const user = req.user as UserTokenResponseDto;
         if (user.rol !== RoleType.SOCIO.toString()) {
             throw new ErrorException("No tienes permisos de acceso", 403);

@@ -24,6 +24,12 @@ export class ParkingLotVehicleRouter extends BaseRouter<ParkingLotVehicleControl
             (req, res, next) => this.controller.registerVehicleExit(req, res, next)
           );
 
+          this.router.get(
+            "/parqueaderos/:id/vehiculos",
+            (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+            (req, res, next) => this.controller.getVehiclesParkedByParkingLotId(req, res, next)
+          )
+
 
       }
 

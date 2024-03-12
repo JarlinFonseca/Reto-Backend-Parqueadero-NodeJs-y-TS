@@ -16,11 +16,11 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
             AND active_entry_flag=true
         `;
         const countVehiclesArray = await entityManager.query(query, [parking_lot_id]);
-     
+
         return this.convertArrayResultsToNumber(countVehiclesArray);
     }
 
-    private async convertArrayResultsToNumber(resultArray:any) {
+    private async convertArrayResultsToNumber(resultArray: any) {
         // Verifica si hay al menos un resultado en el array
         if (resultArray.length > 0) {
             // Extrae el valor numérico de la propiedad 'count', el 10 indica que la cadena que se está convirtiendo representa un número decimal
@@ -32,19 +32,33 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
         }
     }
 
-    async findByVehicleIdAndActiveEntryFlag(vehicleId: number, activeEntryFlag: boolean): Promise < ParkingLotVehicleEntity | null > {
-            return(await this.execRepository)
-        .createQueryBuilder('parkingLotVehicle')
-                .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
-                .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
-                .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
-                .where({
-                    vehicle: { id: vehicleId }, // Usando la relación vehicle y su id
-                    activeEntryFlag,
-                })
-                .getOne();
-        }
+    async findByVehicleIdAndActiveEntryFlag(vehicleId: number, activeEntryFlag: boolean): Promise<ParkingLotVehicleEntity | null> {
+        return (await this.execRepository)
+            .createQueryBuilder('parkingLotVehicle')
+            .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
+            .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
+            .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
+            .where({
+                vehicle: { id: vehicleId }, // Usando la relación vehicle y su id
+                activeEntryFlag,
+            })
+            .getOne();
     }
+
+    async findAllByParkingLotIdAndActiveEntryFlag(parkingLotId: number,activeEntryFlag: boolean):Promise<ParkingLotVehicleEntity[] | null>{
+        return (await this.execRepository)
+        .createQueryBuilder('parkingLotVehicle')
+        .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
+        .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
+        .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
+        .where({
+            parkingLot: { id: parkingLotId }, // Usando la relación parkingLot y su id
+            activeEntryFlag,
+        })
+        .getMany();
+
+    }
+}
 
 
 

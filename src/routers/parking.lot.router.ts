@@ -22,6 +22,13 @@ export class ParkingLotRouter extends BaseRouter<ParkingLotController,ParkingLot
             (req, res, next) => this.middleware.checkAdminRole(req, res, next),
             (req, res, next) => this.controller.getParkingLots(req, res, next)
           );
+          
+          this.router.get(
+            "/parqueaderos/socios",
+            (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+            (req, res, next) => this.middleware.checkSocioRole(req, res, next),
+            (req, res, next) => this.controller.getParkingLotsPartner(req, res, next)
+          );
 
           this.router.get(
             "/parqueaderos/:id",
@@ -44,6 +51,8 @@ export class ParkingLotRouter extends BaseRouter<ParkingLotController,ParkingLot
             (req, res, next) => this.middleware.checkAdminRole(req, res, next),
             (req, res, next) => this.controller.deleteParkingLot(req, res, next)
           );
+
+
 
       }
 

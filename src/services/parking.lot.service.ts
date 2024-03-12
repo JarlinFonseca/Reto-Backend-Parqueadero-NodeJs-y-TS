@@ -8,6 +8,9 @@ import { ParkingLotRepository } from "../repositories/parking.lot.repository";
 import { UserRepository } from "../repositories/user.repository";
 import { HttpResponse } from "../shared/response/http.response";
 import { ParkingLotEntity } from "../entities/parking.lot.entity";
+import { TokenService } from "./token.service";
+import { ParkingLotPartnerResponseDto } from "../dto/response/parking.lot.partner.response.dto";
+import { FechaUtils } from "../shared/util/fecha.utils";
 
 
 export class ParkingLotService {
@@ -15,6 +18,8 @@ export class ParkingLotService {
     private parkingLotRepository = new ParkingLotRepository();
     private userRepository = new UserRepository();
     private parkingLotResponseMapper: ParkingLotResponseMapper = new ParkingLotResponseMapper();
+    private tokenService: TokenService = new TokenService();
+    private fechaUtils:FechaUtils = new FechaUtils();
     private ID_ROL_SOCIO: number = 2;
 
 
@@ -79,6 +84,29 @@ export class ParkingLotService {
             throw new ErrorException("Hay un error al eliminar", 409);
         }
 
+    }
+
+    async verifyExistParkingLot(id: number) {
+        const parkingLot = await (await this.parkingLotRepository.execRepository).findOneBy({ id });
+        return parkingLot !== null;
+    }
+
+    async getParkingLotsPartner(tokenJwt: string):Promise<ParkingLotPartnerResponseDto[]>{
+        if (!tokenJwt) throw new ErrorException("No existe el token JWT", 409);
+        const idPartnerAuth = await this.tokenService.obtenerIdDesdeToken(tokenJwt);
+        this.validateUser(idPartnerAuth);
+
+        const parkingLotsPartners = await this.parkingLotRepository.findAllParkingLotByUserId(idPartnerAuth);
+
+        return parkingLotsPartners!.map((parkingLot) =>{
+            const parkingLotPartnerResponseDto: ParkingLotPartnerResponseDto = new ParkingLotPartnerResponseDto();
+            parkingLotPartnerResponseDto.id= Number(parkingLot.id);
+            parkingLotPartnerResponseDto.name = parkingLot.name;
+            parkingLotPartnerResponseDto.createdAt = this.fechaUtils.convertirFechaUtcAColombia(parkingLot.createdAt);
+            parkingLotPartnerResponseDto.costHourVehicle = parkingLot.costHourVehicle;
+            parkingLotPartnerResponseDto.quantityVehiclesMaximum = parkingLot.quantityVehiclesMaximum;
+            return parkingLotPartnerResponseDto;
+        })
     }
 
 
