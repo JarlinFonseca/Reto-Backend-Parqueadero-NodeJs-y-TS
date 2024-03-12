@@ -58,6 +58,33 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
         .getMany();
 
     }
+
+    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin():Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]>{
+        return (await this.execRepository)
+          .createQueryBuilder('plv')
+          .select('plv.vehicle_id', 'vehicle_id')
+          .addSelect('COUNT(plv.vehicle_id)', 'cantidadVecesRegistrado')
+          .groupBy('plv.vehicle_id')
+          .orderBy('"cantidadVecesRegistrado"', 'DESC')
+          .limit(10)
+          .getRawMany();
+      
+   }
+
+   async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(user_id: number):Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]>{
+ 
+    console.log("entra y muere...")
+    return (await this.execRepository)
+    .createQueryBuilder('pv')
+    .select('vehicle_id, COUNT(vehicle_id) AS "cantidadVecesRegistrado"')
+    .innerJoin('pv.parkingLot', 'p')
+    .innerJoin('p.user', 'u')
+    .where('u.id = :user_id', { user_id })
+    .groupBy('vehicle_id')
+    .orderBy('"cantidadVecesRegistrado"', 'DESC')
+    .limit(10)
+    .getRawMany();
+}
 }
 
 

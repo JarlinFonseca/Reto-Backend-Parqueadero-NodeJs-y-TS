@@ -56,10 +56,7 @@ export class ParkingLotController {
       .catch((err) => next(err));
     } catch (err) {
       next(err);
-    }
-
-
-      
+    } 
   }
 }
 

@@ -40,7 +40,7 @@ export class ParkingLotVehicleController {
     }
   }
 
-  getVehiclesParkedByParkingLotId(req: Request, res: Response, next: NextFunction){
+  getVehiclesParkedByParkingLotId(req: Request, res: Response, next: NextFunction) {
     try {
       const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
       if (!tokenJwt) {

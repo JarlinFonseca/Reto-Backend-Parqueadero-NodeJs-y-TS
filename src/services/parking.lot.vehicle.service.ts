@@ -2,6 +2,7 @@
 import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.parking.lot.request.dto";
 import { EntryVehicleParkingLotResponseDto } from "../dto/response/entry.vehicle.parking.lot.response.dto";
 import { ExitVehicleParkingLotResponseDto } from "../dto/response/exit.vehicle.parking.lot.response.dto";
+import { IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto } from "../dto/response/indicator.vehicles.more.times.registered.different.parking.lots.response.dto";
 import { ParkingLotResponseDto } from "../dto/response/parking.lot.response.dto";
 import { VehicleParkedResponseDto } from "../dto/response/vehicle.parked.response.dto";
 import { HistoryEntity } from "../entities/history.entity";
@@ -119,6 +120,22 @@ export class ParkingLotVehicleService {
            vehicleParkedResponseDto.entryDate = this.fechaUtils.convertirFechaUtcAColombia(parkingLotVehicle.createdEntry);
            return vehicleParkedResponseDto;
         });
+    }
+
+    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTen(tokenJwt:string):Promise<IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto[]>{
+        let vehicles;
+         if(await this.isRolSocio(tokenJwt)) vehicles =await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(await this.tokenService.obtenerIdDesdeToken(tokenJwt));
+         else vehicles= await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin();
+        
+        return await Promise.all(vehicles.map( async (vehicleParkingLot) =>{
+            const indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto = new IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto();
+            const vehicle =  await this.vehicleServie.getVehicleById(vehicleParkingLot.vehicle_id);
+            if(!vehicle) throw new ErrorException("El vehiculo no existe", 409);
+            indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto.vehicle = vehicle;
+            indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto.quantityTimesRegistered = Number(vehicleParkingLot.cantidadVecesRegistrado);
+
+            return indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto;
+        }));
     }
 
     private getHours(entryDate: Date, departureDate: Date) {
