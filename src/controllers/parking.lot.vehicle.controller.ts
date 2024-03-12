@@ -33,7 +33,7 @@ export class ParkingLotVehicleController{
                 }
           
                 const data = await this.parkingLotVehicleService.registerVehicleExit(req.body, tokenJwt);
-                return this.httpResponse.Created(res, data);
+                return this.httpResponse.Ok(res, data);
               } catch (err) {
                 next(err);
               }

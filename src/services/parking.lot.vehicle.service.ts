@@ -10,6 +10,7 @@ import { ParkingLotVehicleRepositoty } from "../repositories/parking.lot.vehicle
 import { UserRepository } from "../repositories/user.repository";
 import { HttpResponse } from "../shared/response/http.response";
 import { FechaUtils } from "../shared/util/fecha.utils";
+import { HistoryService } from "./history.service";
 import { TokenService } from "./token.service";
 import { VehicleService } from "./vehicle.service";
 
@@ -20,16 +21,21 @@ export class ParkingLotVehicleService {
     private userRepository = new UserRepository();
     private tokenService: TokenService = new TokenService();
     private vehicleServie: VehicleService = new VehicleService();
+    private historyService: HistoryService = new HistoryService();
     private fechaUtils: FechaUtils = new FechaUtils();
 
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()) { }
 
 
-    async registerVehicleEntry(entryVehicleParkingLotRequestDto: EntryVehicleParkingLotRequestDto, tokenJwt: string): Promise<EntryVehicleParkingLotResponseDto > {
+    async registerVehicleEntry(entryVehicleParkingLotRequestDto: EntryVehicleParkingLotRequestDto, tokenJwt: string): Promise<EntryVehicleParkingLotResponseDto> {
         await this.verifyPartnerAuth(entryVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
         const countMaxVehicles = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(entryVehicleParkingLotRequestDto.parkingLotId))!.quantityVehiclesMaximum;
         const currentVehicleQuantity = await this.parkingLotVehicleRepository.getCountVehiclesParkingLot(entryVehicleParkingLotRequestDto.parkingLotId);
 
+        console.log(countMaxVehicles)
+        console.log(currentVehicleQuantity)
+
+        console.log((countMaxVehicles - Number(currentVehicleQuantity)) <= 0)
         const placa: string = entryVehicleParkingLotRequestDto.placa.toUpperCase();
 
         if ((countMaxVehicles - currentVehicleQuantity) <= 0) throw new ErrorException("El parqueadero ya esta lleno, la cantidad de vehiculos limite ha sido superada", 409);
@@ -37,7 +43,7 @@ export class ParkingLotVehicleService {
         const vehicle = await this.vehicleServie.getVehicleByPlaca(placa);
         if (await this.vehicleServie.verifyExistVehicle(vehicle)) throw new ErrorException("No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero", 409);
 
-        const vehicleSave =  await this.vehicleServie.saveVehicle(placa, vehicle);
+        const vehicleSave = await this.vehicleServie.saveVehicle(placa, vehicle);
 
         const parkingLot = await this.parkingLotRepository.findParkingLotByIdWithRelationUser(entryVehicleParkingLotRequestDto.parkingLotId);
 
@@ -57,58 +63,50 @@ export class ParkingLotVehicleService {
 
     }
 
-    async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string):Promise<ExitVehicleParkingLotResponseDto | null>{
+    async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string): Promise<ExitVehicleParkingLotResponseDto | null> {
 
-        const idPartnerAuth =  await this.verifyPartnerAuth(exitVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
+        const idPartnerAuth = await this.verifyPartnerAuth(exitVehicleParkingLotRequestDto.parkingLotId, tokenJwt);
 
-        const placa:string = exitVehicleParkingLotRequestDto.placa.toUpperCase();
+        const placa: string = exitVehicleParkingLotRequestDto.placa.toUpperCase();
         const vehicle = await this.vehicleServie.getVehicleByPlaca(placa);
-        if(!await this.vehicleServie.verifyExistVehicle(vehicle)) throw new ErrorException("No se puede Registrar Salida, no existe la placa en el parqueadero", 409);
+        if (!await this.vehicleServie.verifyExistVehicle(vehicle)) throw new ErrorException("No se puede Registrar Salida, no existe la placa en el parqueadero", 409);
 
         const parkingLotVehicle = await this.parkingLotVehicleRepository.findByVehicleIdAndActiveEntryFlag(vehicle!.id, true);
-        if(!parkingLotVehicle) throw new ErrorException("El vehiculo no se encontro parqueado", 409)
-        if(Number(parkingLotVehicle!.parkingLot.id) !== exitVehicleParkingLotRequestDto.parkingLotId) throw new ErrorException("El vehiculo no pertenece al parqueadero dado", 409);
+        if (!parkingLotVehicle) throw new ErrorException("El vehiculo no se encontro parqueado", 409)
+        if (Number(parkingLotVehicle.parkingLot.id) !== exitVehicleParkingLotRequestDto.parkingLotId) throw new ErrorException("El vehiculo no pertenece al parqueadero dado", 409);
 
-        if(idPartnerAuth !== parkingLotVehicle!.parkingLot.user.id) throw new ErrorException("El usuario autenticado no es SOCIO del parqueadero", 409);
+        if (idPartnerAuth !== parkingLotVehicle.parkingLot.user.id) throw new ErrorException("El usuario autenticado no es SOCIO del parqueadero", 409);
 
         const departureDate = this.fechaUtils.fechaActualColombia();
-        const entryDate = parkingLotVehicle!.createdEntry;
+        const entryDate = parkingLotVehicle.createdEntry;
 
-        const costHourVehicle = parkingLotVehicle!.parkingLot.costHourVehicle;
+        const costHourVehicle = parkingLotVehicle.parkingLot.costHourVehicle;
         let hours = this.getHours(entryDate, departureDate);
 
-        if(hours < 1) hours=1.0;
-        let paymentTotal = (hours*costHourVehicle);
-        paymentTotal = Math.round(hours * costHourVehicle);
+        if (hours < 1) hours = 1.0;
+        let paymentTotal = Math.round(hours * costHourVehicle);
 
-       const history = new HistoryEntity();
-       history.entryDate= entryDate;
-       history.departureDate = departureDate;
-       history.totalPayment = paymentTotal;
-
-       console.log(history)
+        const history = new HistoryEntity();
+        history.entryDate = entryDate;
+        history.departureDate = departureDate;
+        history.totalPayment = paymentTotal;
 
 
-        parkingLotVehicle!.activeEntryFlag = true;
-       // (await this.parkingLotVehicleRepository.execRepository).save(parkingLotVehicle)
+        parkingLotVehicle.activeEntryFlag = false;
+        (await this.parkingLotVehicleRepository.execRepository).save(parkingLotVehicle)
+
 
         history.parkingLotVehicle = parkingLotVehicle;
+        await this.historyService.saveHistory(history);
 
-        
-        
-
-
-        return null;
-
-
-
+        return new ExitVehicleParkingLotResponseDto("Salida registrada");
     }
 
-    private getHours(entryDate: Date, departureDate: Date){
+    private getHours(entryDate: Date, departureDate: Date) {
         const initialTime = entryDate.getTime();
         const finalTime = departureDate.getTime();
         let rest = (finalTime - initialTime);
-        rest =rest / 3600000;
+        rest = rest / 3600000;
         return rest;
     }
 
@@ -118,7 +116,7 @@ export class ParkingLotVehicleService {
 
         const parkingLot = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(parkingLotId));
         if (!parkingLot) throw new ErrorException("El parqueadero no existe", 404);
-        const idPartnerParkingLot = parkingLot!.user.id;
+        const idPartnerParkingLot = parkingLot.user.id;
 
         if (idPartnerAuth != idPartnerParkingLot) throw new ErrorException("No es socio del parqueadero", 409);
 
