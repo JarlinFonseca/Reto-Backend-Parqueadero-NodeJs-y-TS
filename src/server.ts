@@ -31,28 +31,28 @@ class ServerBootstrap extends ConfigServer {
 
     this.app.use("/api/v1", this.routers());
     this.app.use(new ErrorHandlerMiddleware().errorHandler)
-    
+
     this.listen();
   }
 
   routers(): Array<express.Router> {
-   return [
-    new UserRouter().router,
-    new ParkingLotRouter().router,
-    new AuthRouter().router,
-    new ParkingLotVehicleRouter().router,
+    return [
+      new UserRouter().router,
+      new ParkingLotRouter().router,
+      new AuthRouter().router,
+      new ParkingLotVehicleRouter().router,
 
-  ];
+    ];
   }
 
-  passportUse(){
+  passportUse() {
     return [new LoginStrategy().use, new JwtStrategy().use]
   }
 
-  async dbConecct(): Promise<DataSource | void>{
-    return this.initConnect.then(()=>{
+  async dbConecct(): Promise<DataSource | void> {
+    return this.initConnect.then(() => {
       console.log("Connect Success")
-    }).catch((err)=>{
+    }).catch((err) => {
       console.error(err)
     })
   }
@@ -64,4 +64,4 @@ class ServerBootstrap extends ConfigServer {
   }
 }
 
-new ServerBootstrap();
+const serverBootstrap = new ServerBootstrap(); 

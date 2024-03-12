@@ -10,21 +10,25 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
 
   routes(): void {
 
-    this.router.get("/users", 
-    (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
-    (req, res, next) => [this.middleware.checkAdminRole(req, res, next)],
-    (req, res, next) => this.controller.getUsers(req, res, next)
+    this.router.get("/users",
+      (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+      (req, res, next) => this.middleware.checkAdminRole(req, res, next),
+      (req, res, next) => this.controller.getUsers(req, res, next)
     );
 
     this.router.get(
       "/users/:id",
+      (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+      (req, res, next) => this.middleware.checkAdminRole(req, res, next),
       (req, res, next) => this.controller.getUserById(req, res, next)
     );
 
 
     this.router.post(
       "/usuarios/socios",
-      (req, res, next) => [this.middleware.userValidator(req, res, next)],
+      (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+      (req, res, next) => this.middleware.checkAdminRole(req, res, next),
+      (req, res, next) => this.middleware.userValidator(req, res, next),
       (req, res, next) => this.controller.savePartner(req, res, next)
     );
 
@@ -32,7 +36,8 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
       "/script-sql",
       (req, res, next) => this.controller.executeScript(req, res, next)
     );
-    
+
+    // Prueba :
     // this.router.put(
     //   "/users/update/:id",
     //   this.middleware.passAuth("jwt"),
@@ -42,7 +47,9 @@ export class UserRouter extends BaseRouter<UserController, UserMiddleware> {
 
     this.router.delete(
       "/deleteUser/:id",
-      (req, res) => this.controller.deleteUser(req, res)
+      (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+      (req, res, next) => this.middleware.checkAdminRole(req, res, next),
+      (req, res, next) => this.controller.deleteUser(req, res, next)
     );
   }
 }

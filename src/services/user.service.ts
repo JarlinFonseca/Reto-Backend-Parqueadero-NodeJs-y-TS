@@ -1,4 +1,4 @@
-﻿import { DeleteResult, QueryFailedError, UpdateResult } from "typeorm";
+﻿import { DeleteResult } from "typeorm";
 import { UserEntity } from "../entities/user.entity";
 import * as bcrypt from "bcrypt";
 import { UserRequestDTO } from "../dto/request/user.request.dto";
@@ -79,17 +79,15 @@ export class UserService {
   }
 
   async executeScript(): Promise<void> {
-
     const rolSocio: RolEntity | null = await this.rolService.findRolById(this.ID_ROL_SOCIO);
     const existEmailAdmin = await this.userRepository.existEmail("admin@mail.com")
 
-    if(rolSocio !==null || existEmailAdmin)  throw new ErrorException("Error al ejecutar el script SQL, ya se han guardado los datos", 409);
+    if (rolSocio !== null || existEmailAdmin) throw new ErrorException("Error al ejecutar el script SQL, ya se han guardado los datos", 409);
 
     const queriesSql = await (this.userRepository).getStringQueriesSQL();
 
     try {
-      const ts = await (await this.userRepository.execRepository).query(queriesSql);
-      //if(!ts) throw new ErrorException("Hubo un error en las queries puestas en el import.sql", 409);
+      await (await this.userRepository.execRepository).query(queriesSql);
     } catch (err) {
       throw new ErrorException("Hubo un error en las queries puestas en el import.sql o ya existen los registros", 409);
     }

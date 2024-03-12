@@ -1,5 +1,4 @@
 ﻿import * as dotenv from "dotenv";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { AppDataSource } from "./data.source";
 import { DataSource } from "typeorm";
 
@@ -20,7 +19,7 @@ export abstract class ConfigServer {
   }
 
   public get nodeEnv(): string {
-    return this.getEnvironment("NODE_ENV")?.trim() || "";
+    return this.getEnvironment("NODE_ENV")?.trim() ?? "";
   }
 
   public createPathEnv(path: string): string {

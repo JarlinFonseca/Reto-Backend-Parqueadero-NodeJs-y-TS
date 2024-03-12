@@ -1,11 +1,9 @@
-﻿import passport, { authenticate } from "passport";
+﻿import passport from "passport";
 import { HttpResponse } from "../response/http.response";
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandlerMiddleware } from "./error.hanlder.middlware";
 import { RoleType } from "../../enums/role.type";
-import { UserEntity } from "../../entities/user.entity";
 import { UserTokenResponseDto } from "../../dto/response/user.token.response.dto";
-import { TokenExpiredError } from "jsonwebtoken";
 import { ErrorException } from "../../exceptions/ErrorException";
 import { TokenRepository } from "../../repositories/token.repository";
 

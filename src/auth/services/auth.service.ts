@@ -101,12 +101,12 @@ export class AuthService extends ConfigServer {
     }
 
     public async findByTokenJwt(tokenJwt: string): Promise<TokenEntity | null> {
-        return (await this.tokenRepository).findByTokenJwt(tokenJwt);
+        return (this.tokenRepository).findByTokenJwt(tokenJwt);
     }
 
 
     public async getTokenByIdentificator(identificator: string): Promise<TokenEntity | null> {
-        return (await this.tokenRepository).getTokenByIdentificator(identificator);
+        return (this.tokenRepository).getTokenByIdentificator(identificator);
     }
 
     public async deleteTokenJwtById(id:number):Promise<void>{

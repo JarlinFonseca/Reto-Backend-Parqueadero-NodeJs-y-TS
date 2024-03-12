@@ -1,6 +1,5 @@
 import {IsEmail, IsNotEmpty, Length, Matches } from "class-validator";
 
-
 export class UserRequestDTO  {
 
   @IsNotEmpty({message: 'El campo name es requerido'})
@@ -12,7 +11,7 @@ export class UserRequestDTO  {
   @IsNotEmpty({message: 'El campo lastname es requerido'})
   lastname!: string;
 
-  @Matches(/^[0-9]+$/, { message: 'El campo name debe contener números' })
+  @Matches(/^\d+$/, { message: 'El campo name debe contener números' })
   @IsNotEmpty({message: 'El campo dni es requerido'})
   dni!: string;
 

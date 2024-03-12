@@ -1,15 +1,8 @@
-import { ValidationError } from "class-validator";
 import { NextFunction, Request, Response } from "express";
-import { QueryFailedError } from "typeorm";
 
 export class ErrorHandlerMiddleware{
 
-    constructor(){}
-
      errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-       // console.error(err.stack);
-    
-
         if (err.isExceptionOwnError) {
 
             const rta = {
