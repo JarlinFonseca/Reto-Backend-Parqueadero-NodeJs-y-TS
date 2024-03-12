@@ -20,10 +20,9 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
         return passport.authenticate(type, { session: false }, async function (err: any, user: any, info: any) {
             try {
                 if (err) return next(err);
-                //  console.log(info.message)
-                if (info && info.message && info.message.includes('jwt expired')) {
+                if (info?.message?.includes('jwt expired')) {
                     const authorizationHeader = req.headers.authorization;
-                    console.log(authorizationHeader !== null)
+
                     if (authorizationHeader) {
                         const tokenJwt = authorizationHeader.replace('Bearer', '').trim();
 
@@ -39,15 +38,13 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
 
                         throw new ErrorException("El token ha expirado", 403);
                     }
-
-
                 }
 
-                if (info && info.message && info.message.includes('Las credenciales son incorrectas')) {
+                if (info?.message?.includes('Las credenciales son incorrectas')) {
                     throw new ErrorException(`${info.message}`, 401);
                 }
 
-                if (info && info.message && info.message.includes('El token ha sido revocado')) {
+                if (info?.message?.includes('El token ha sido revocado')) {
                     throw new ErrorException(`${info.message}`, 403);
                 }
 
@@ -55,37 +52,21 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
                 if (!user) return res.status(403).json({ message: info.message });
 
                 req.user = user; // Asigna el usuario autenticado a req.user para que esté disponible en el siguiente middleware
-                console.log("Entra en el SharedMiddleware en la funcion dentro del passAuth")
                 return next();
 
             } catch (err) {
                 next(err);
             }
 
-
-
         })(req, res, next);;
 
     }
 
-    // passAuth(type: string, req: Request, res: Response, next: NextFunction) {
-    //     return passport.authenticate(type, { session: false }, function (err: any, user: any, info: any) {
-    //         if (err) return next(err);
-    //         if (!user) return res.status(401).json({ message: info.message });
-
-    //         req.user = user; // Asigna el usuario autenticado a req.user para que esté disponible en el siguiente middleware
-    //         //  console.log(user)
-    //         console.log("Entra en el SharedMiddleware en la funcion dentro del passAuth")
-    //         return next();
-    //     })(req, res, next);;
-
-    // }
 
     checkSocioRole(req: Request, res: Response, next: NextFunction) {
         const user = req.user as UserTokenResponseDto;
         if (user.rol !== RoleType.SOCIO.toString()) {
-            throw new ErrorException("No tienes permisos de acceso", 403 );
-           // return this.httpResponse.Forbidden(res, "No tienes permiso");
+            throw new ErrorException("No tienes permisos de acceso", 403);
         }
         return next();
     }
@@ -94,8 +75,7 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
         console.log("Check admin role")
         const user = req.user as UserTokenResponseDto;
         if (user.rol !== RoleType.ADMIN.toString()) {
-            throw new ErrorException("No tienes permisos de acceso", 403 );
-          //  return this.httpResponse.Forbidden(res, "No tienes permiso");
+            throw new ErrorException("No tienes permisos de acceso", 403);
         }
         return next();
 
