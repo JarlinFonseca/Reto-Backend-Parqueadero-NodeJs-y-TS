@@ -97,7 +97,12 @@ export class AuthService extends ConfigServer {
         });
 
         (await this.tokenRepository.execRepository).save(validUserTokens);
+    }
 
+    public async deleteAllTokensRevoked(){
+        let tokensRevoked = (await this.tokenRepository.findAllTokensRevoked());
+        (await this.tokenRepository.execRepository).remove(tokensRevoked);
+        console.log('Tokens revocados eliminados:', tokensRevoked);
     }
 
     public async findByTokenJwt(tokenJwt: string): Promise<TokenEntity | null> {

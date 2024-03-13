@@ -24,6 +24,7 @@ export class AuthController extends AuthService {
 
         const decodedToken = jwt.decode(encode.accessToken) as PayloadToken;
 
+        this.deleteAllTokensRevoked();
         this.revokeAllUserTokens(userEncode);
         this.saveTokenUser(userEncode, encode.accessToken, decodedToken.identificator);
 
