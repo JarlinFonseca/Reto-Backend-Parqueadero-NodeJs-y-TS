@@ -76,7 +76,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXlPRFEwT0RBc0ltVjRjQ0k2TVRjeE1ETXdOakE0TUgwLlA1aGRVd3oyYTU1b01EWTI2RE9kYXIxY0lnajFzazZZUjBPZWFmdy1LSnciLCJpYXQiOjE3MTAyODQ0ODAsImV4cCI6MTcxMDMwNjA4MH0.ND78cVoXohsgAm7q5A-5Msy_zUR1XQEe1DuB6seHoo8",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOalF4T1RBc0ltVjRjQ0k2TVRjeE1ETTROVGM1TUgwLlFtNmxPa2g0bHljc2dpMWVzV1ZZMVFJX0NBYUF5ZzFPUGFRSkR0TXRwSGMiLCJpYXQiOjE3MTAzNjQxOTAsImV4cCI6MTcxMDM4NTc5MH0.Mxw6-J4pm6P2GYBy614DEl4Vk-DB6hedZftBbZUzmug",
 											"type": "string"
 										}
 									]
@@ -97,6 +97,109 @@
 										"parqueaderos",
 										"vehiculos",
 										"mas-veces-registrados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar los 10 vehiculos mas registrados en un parqueadero",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOREF4TkRjc0ltVjRjQ0k2TVRjeE1ETTJNVGMwTjMwLnV2MlZmVjRVSjFaSm5sa1hQQ3lIa1ljcENrOGlyWDFKcVhBMTFrQnhrTFkiLCJpYXQiOjE3MTAzNDAxNDcsImV4cCI6MTcxMDM2MTc0N30.WoD6EhpVnFD7Pn8YTErPLcnCPt5429B-TC0RKi2HuMM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/parqueaderos/9/vehiculos/mas-veces-registrados",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"parqueaderos",
+										"9",
+										"vehiculos",
+										"mas-veces-registrados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar los vehiculos parqueados por primera vez en un parqueadero",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOREF4TkRjc0ltVjRjQ0k2TVRjeE1ETTJNVGMwTjMwLnV2MlZmVjRVSjFaSm5sa1hQQ3lIa1ljcENrOGlyWDFKcVhBMTFrQnhrTFkiLCJpYXQiOjE3MTAzNDAxNDcsImV4cCI6MTcxMDM2MTc0N30.WoD6EhpVnFD7Pn8YTErPLcnCPt5429B-TC0RKi2HuMM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/parqueaderos/9/primera-vez",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"parqueaderos",
+										"9",
+										"primera-vez"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar vehiculos parqueados mediante coicidencia en la placa",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOakl6TkRRc0ltVjRjQ0k2TVRjeE1ETTRNemswTkgwLmpweHNqamdsd0lyS1ppa0RBZVktZXhBY2N0TjRkODU2MXFVV3hORVZNN1kiLCJpYXQiOjE3MTAzNjIzNDQsImV4cCI6MTcxMDM4Mzk0NH0.hXhtjObdYqC0qwD-iMr5o-sJc2CsxnhvQISTlZf-NZc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/vehiculos/DM/coincidencias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"vehiculos",
+										"DM",
+										"coincidencias"
 									]
 								}
 							},
@@ -191,7 +294,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXlOemN4TVRnc0ltVjRjQ0k2TVRjeE1ESTVPRGN4T0gwLkMwbUxhdnlzME52UTVGOTZsazRvenNBRWhLaVVzRG53TGtOWmlnMmRaU0EiLCJpYXQiOjE3MTAyNzcxMTgsImV4cCI6MTcxMDI5ODcxOH0.GSz9Vm2ZIhuTtsYJH7By9w0CF7bwyz7Damq-pw_6A0Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOalF4T1RBc0ltVjRjQ0k2TVRjeE1ETTROVGM1TUgwLlFtNmxPa2g0bHljc2dpMWVzV1ZZMVFJX0NBYUF5ZzFPUGFRSkR0TXRwSGMiLCJpYXQiOjE3MTAzNjQxOTAsImV4cCI6MTcxMDM4NTc5MH0.Mxw6-J4pm6P2GYBy614DEl4Vk-DB6hedZftBbZUzmug",
 									"type": "string"
 								}
 							]
@@ -252,7 +355,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXlOemN4TVRnc0ltVjRjQ0k2TVRjeE1ESTVPRGN4T0gwLkMwbUxhdnlzME52UTVGOTZsazRvenNBRWhLaVVzRG53TGtOWmlnMmRaU0EiLCJpYXQiOjE3MTAyNzcxMTgsImV4cCI6MTcxMDI5ODcxOH0.GSz9Vm2ZIhuTtsYJH7By9w0CF7bwyz7Damq-pw_6A0Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXpOREF4TkRjc0ltVjRjQ0k2TVRjeE1ETTJNVGMwTjMwLnV2MlZmVjRVSjFaSm5sa1hQQ3lIa1ljcENrOGlyWDFKcVhBMTFrQnhrTFkiLCJpYXQiOjE3MTAzNDAxNDcsImV4cCI6MTcxMDM2MTc0N30.WoD6EhpVnFD7Pn8YTErPLcnCPt5429B-TC0RKi2HuMM",
 									"type": "string"
 								}
 							]
@@ -428,7 +531,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF5T0RRMU9URXNJbVY0Y0NJNk1UY3hNRE13TmpFNU1YMC5KdlNnUWxqYU9kcEVJVU5reEItS1VaOUJVYXlOYjVmaXRzZ3Q2M1c0S2ZjIiwiaWF0IjoxNzEwMjg0NTkxLCJleHAiOjE3MTAzMDYxOTF9.NdT89kcXGZLwgaJ4gGsheojd098ZQBpli8vfDC3eMzU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
 											"type": "string"
 										}
 									]
@@ -453,18 +556,155 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Listar los 10 vehiculos mas registrados en un parqueadero",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/parqueaderos/14/vehiculos/mas-veces-registrados",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"parqueaderos",
+										"14",
+										"vehiculos",
+										"mas-veces-registrados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar los vehiculos parqueados por primera vez en un parqueadero",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/parqueaderos/14/primera-vez",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"parqueaderos",
+										"14",
+										"primera-vez"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Ganancias",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/parqueaderos/14/ganancias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"parqueaderos",
+										"14",
+										"ganancias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar vehiculos parqueados mediante coicidencia en la placa",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/api/v1/indicadores/vehiculos/DM/coincidencias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"v1",
+										"indicadores",
+										"vehiculos",
+										"DM",
+										"coincidencias"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
 				{
-					"name": "Listar vehiculos parqueados de un parqueadero Copy",
+					"name": "Listar vehiculos parqueados de un parqueadero",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF5TnpZM09EQXNJbVY0Y0NJNk1UY3hNREk1T0RNNE1IMC56NnhyVVM0RjNVVnUyVVZlcVpIRWRZdlBCV3B2U2VsQTRIaFJWYXZ3dGo4IiwiaWF0IjoxNzEwMjc2NzgwLCJleHAiOjE3MTAyOTgzODB9.0uefWc1Vd2Jlu2r1tl0iuj8wZ8VfiB8TEEHtN5LoLMk",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TkRFME56Y3NJbVY0Y0NJNk1UY3hNRE0yTXpBM04zMC5yV19IdXFFYnoyMDByblFZaHhVT1FoaFNoMWdKeVFEeDM4RGxiRlRkbE5NIiwiaWF0IjoxNzEwMzQxNDc3LCJleHAiOjE3MTAzNjMwNzd9.b7WCNsaD2PmHiB-ud-uSqzRFhZIKup4-dPa9CWBs_sI",
 									"type": "string"
 								}
 							]
@@ -496,7 +736,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF5T0RRMU9URXNJbVY0Y0NJNk1UY3hNRE13TmpFNU1YMC5KdlNnUWxqYU9kcEVJVU5reEItS1VaOUJVYXlOYjVmaXRzZ3Q2M1c0S2ZjIiwiaWF0IjoxNzEwMjg0NTkxLCJleHAiOjE3MTAzMDYxOTF9.NdT89kcXGZLwgaJ4gGsheojd098ZQBpli8vfDC3eMzU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TXpneE1ERXNJbVY0Y0NJNk1UY3hNRE0xT1Rjd01YMC5CYk94Mm1BbjE2bUVZTklEdjEtWXU2TGJMRkRPSnprMUZlSy0xcmU3eEZ3IiwiaWF0IjoxNzEwMzM4MTAxLCJleHAiOjE3MTAzNTk3MDF9.Dvj-m5a7aigr2fi_OL7xq0O6y6OUug7WUOTjltCPPZY",
 									"type": "string"
 								}
 							]
@@ -527,7 +767,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF5T0RRMU9URXNJbVY0Y0NJNk1UY3hNRE13TmpFNU1YMC5KdlNnUWxqYU9kcEVJVU5reEItS1VaOUJVYXlOYjVmaXRzZ3Q2M1c0S2ZjIiwiaWF0IjoxNzEwMjg0NTkxLCJleHAiOjE3MTAzMDYxOTF9.NdT89kcXGZLwgaJ4gGsheojd098ZQBpli8vfDC3eMzU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
 									"type": "string"
 								}
 							]
@@ -536,7 +776,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parkingLotId\": 17\r\n}",
+							"raw": "{\r\n    \"placa\": \"DMU821\",\r\n    \"parkingLotId\": 9\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -569,7 +809,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF5T0RRMU9URXNJbVY0Y0NJNk1UY3hNRE13TmpFNU1YMC5KdlNnUWxqYU9kcEVJVU5reEItS1VaOUJVYXlOYjVmaXRzZ3Q2M1c0S2ZjIiwiaWF0IjoxNzEwMjg0NTkxLCJleHAiOjE3MTAzMDYxOTF9.NdT89kcXGZLwgaJ4gGsheojd098ZQBpli8vfDC3eMzU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGFAZ21haWwuY29tIiwiaWQiOiIxMiIsIm5hbWUiOiJDYW1pbGEiLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1OaGJXbHNZVUJuYldGcGJDNWpiMjBpTENKcFpDSTZJakV5SWl3aWJtRnRaU0k2SWtOaGJXbHNZU0lzSW5KdmJDSTZleUpwWkNJNklqSWlMQ0p1WVcxbElqb2lVMDlEU1U4aUxDSmtaWE5qY21sd2RHbHZiaUk2SWxKdmJDQmtaU0JUVDBOSlR5SjlMQ0pwWVhRaU9qRTNNVEF6TlRjMU5qa3NJbVY0Y0NJNk1UY3hNRE0zT1RFMk9YMC5jMXg3aUQwNWNZbGltbzdNcWhBV2FzdTF6bHd1Ym82U193S0NfNlNGM2lvIiwiaWF0IjoxNzEwMzU3NTY5LCJleHAiOjE3MTAzNzkxNjl9.TuMlnvVEJ0fEQxJgk3myzFHdg_S87M1NKcsDbeT1Hhc",
 									"type": "string"
 								}
 							]
@@ -578,7 +818,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parkingLotId\": 17\r\n}",
+							"raw": "{\r\n    \"placa\": \"DMX982\",\r\n    \"parkingLotId\": 14\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -610,7 +850,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"camila@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"juan@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
