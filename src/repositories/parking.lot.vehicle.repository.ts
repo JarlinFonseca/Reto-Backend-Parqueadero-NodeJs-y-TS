@@ -45,47 +45,81 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
             .getOne();
     }
 
-    async findAllByParkingLotIdAndActiveEntryFlag(parkingLotId: number,activeEntryFlag: boolean):Promise<ParkingLotVehicleEntity[] | null>{
+    async findAllByParkingLotIdAndActiveEntryFlag(parkingLotId: number, activeEntryFlag: boolean): Promise<ParkingLotVehicleEntity[] | null> {
         return (await this.execRepository)
-        .createQueryBuilder('parkingLotVehicle')
-        .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
-        .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
-        .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
-        .where({
-            parkingLot: { id: parkingLotId }, // Usando la relación parkingLot y su id
-            activeEntryFlag,
-        })
-        .getMany();
+            .createQueryBuilder('parkingLotVehicle')
+            .leftJoinAndSelect('parkingLotVehicle.parkingLot', 'parkingLot')
+            .leftJoinAndSelect('parkingLotVehicle.vehicle', 'vehicle')
+            .leftJoinAndSelect('parkingLot.user', 'user') // Agregando la relación con UserEntity
+            .where({
+                parkingLot: { id: parkingLotId }, // Usando la relación parkingLot y su id
+                activeEntryFlag,
+            })
+            .getMany();
 
     }
 
-    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin():Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]>{
+    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin(): Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]> {
         return (await this.execRepository)
-          .createQueryBuilder('plv')
-          .select('plv.vehicle_id', 'vehicle_id')
-          .addSelect('COUNT(plv.vehicle_id)', 'cantidadVecesRegistrado')
-          .groupBy('plv.vehicle_id')
-          .orderBy('"cantidadVecesRegistrado"', 'DESC')
-          .limit(10)
-          .getRawMany();
-      
-   }
+            .createQueryBuilder('plv')
+            .select('plv.vehicle_id', 'vehicle_id')
+            .addSelect('COUNT(plv.vehicle_id)', 'cantidadVecesRegistrado')
+            .groupBy('plv.vehicle_id')
+            .orderBy('"cantidadVecesRegistrado"', 'DESC')
+            .limit(10)
+            .getRawMany();
 
-   async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(user_id: number):Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]>{
- 
-    console.log("entra y muere...")
-    return (await this.execRepository)
-    .createQueryBuilder('pv')
-    .select('vehicle_id, COUNT(vehicle_id) AS "cantidadVecesRegistrado"')
-    .innerJoin('pv.parkingLot', 'p')
-    .innerJoin('p.user', 'u')
-    .where('u.id = :user_id', { user_id })
-    .groupBy('vehicle_id')
-    .orderBy('"cantidadVecesRegistrado"', 'DESC')
-    .limit(10)
-    .getRawMany();
+    }
+
+    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(user_id: number): Promise<{ vehicle_id: number, cantidadVecesRegistrado: number }[]> {
+        return (await this.execRepository)
+            .createQueryBuilder('pv')
+            .select('vehicle_id, COUNT(vehicle_id) AS "cantidadVecesRegistrado"')
+            .innerJoin('pv.parkingLot', 'p')
+            .innerJoin('p.user', 'u')
+            .where('u.id = :user_id', { user_id })
+            .groupBy('vehicle_id')
+            .orderBy('"cantidadVecesRegistrado"', 'DESC')
+            .limit(10)
+            .getRawMany();
+    }
+
+    async getVehiclesMoreTimesRegisteredByParkingLotId(parqueaderoId: number): Promise<{ vehicle_id: number, parking_lot_id: number, cantidadVecesRegistrado: number }[]> {
+        const entityManager = (await this.execRepository)
+        const query = `
+          SELECT vehicle_id, parking_lot_id, COUNT(vehicle_id) AS cantidadVecesRegistrado
+          FROM parking_lots_vehicles
+          WHERE parking_lot_id = $1
+          GROUP BY vehicle_id, parking_lot_id
+          ORDER BY cantidadVecesRegistrado DESC
+          LIMIT 10
+        `;
+
+        const result = await entityManager.query(query, [parqueaderoId]);
+
+        return result;
+    }
+
+    async getVehiclesParkedForFirstTimeByParkingLotId(parkingLotId: number): Promise<{ parking_lot_id: number, vehicle_id: number, created_entry: Date }[]> {
+        const entityManager = (await this.execRepository)
+        const query = `
+        SELECT parking_lot_id , vehicle_id , created_entry  FROM parking_lots_vehicles plv  
+            WHERE parking_lot_id  =$1 AND 
+            vehicle_id NOT in(select pv.vehicle_id  from history h join parking_lots_vehicles pv on(h.parking_lot_vehicle_id=pv.id) 
+            GROUP by pv.vehicle_id ) AND vehicle_id IN 
+            (SELECT vehicle_id FROM parking_lots_vehicles  
+            WHERE parking_lot_id  = $1 
+            GROUP BY vehicle_id 
+            HAVING COUNT(vehicle_id) = 1)
+      `;
+        const result = await entityManager.query(query, [parkingLotId]);
+
+        return result;
+
+    }
 }
-}
+
+
 
 
 

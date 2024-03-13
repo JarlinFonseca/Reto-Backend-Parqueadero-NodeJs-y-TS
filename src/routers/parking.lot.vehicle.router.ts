@@ -1,4 +1,5 @@
 ﻿import { ParkingLotVehicleController } from "../controllers/parking.lot.vehicle.controller";
+import { RoleType } from "../enums/role.type";
 import { ParkingLotVehicleMiddleware } from "../middlewares/parking.lot.vehicle.middleware";
 import { BaseRouter } from "../shared/router/router";
 
@@ -27,6 +28,7 @@ export class ParkingLotVehicleRouter extends BaseRouter<ParkingLotVehicleControl
           this.router.get(
             "/parqueaderos/:id/vehiculos",
             (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+            this.middleware.checkRoles([RoleType.SOCIO, RoleType.ADMIN]),
             (req, res, next) => this.controller.getVehiclesParkedByParkingLotId(req, res, next)
           )
 

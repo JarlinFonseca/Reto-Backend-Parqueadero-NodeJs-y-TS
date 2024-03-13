@@ -3,7 +3,7 @@ import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.par
 import { EntryVehicleParkingLotResponseDto } from "../dto/response/entry.vehicle.parking.lot.response.dto";
 import { ExitVehicleParkingLotResponseDto } from "../dto/response/exit.vehicle.parking.lot.response.dto";
 import { IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto } from "../dto/response/indicator.vehicles.more.times.registered.different.parking.lots.response.dto";
-import { ParkingLotResponseDto } from "../dto/response/parking.lot.response.dto";
+import { IndicatorVehiclesMoreTimesRegisteredResponseDto } from "../dto/response/indicator.vehicles.more.times.registered.response.dto";
 import { VehicleParkedResponseDto } from "../dto/response/vehicle.parked.response.dto";
 import { HistoryEntity } from "../entities/history.entity";
 import { ParkingLotVehicleEntity } from "../entities/parking.lot.vehicle.entity";
@@ -26,7 +26,7 @@ export class ParkingLotVehicleService {
     private tokenService: TokenService = new TokenService();
     private vehicleServie: VehicleService = new VehicleService();
     private historyService: HistoryService = new HistoryService();
-    private parkingLotService: ParkingLotService= new ParkingLotService();
+    private parkingLotService: ParkingLotService = new ParkingLotService();
     private fechaUtils: FechaUtils = new FechaUtils();
 
     constructor(private readonly httpResponse: HttpResponse = new HttpResponse()) { }
@@ -107,34 +107,57 @@ export class ParkingLotVehicleService {
         return new ExitVehicleParkingLotResponseDto("Salida registrada");
     }
 
-    async getVehiclesParkedByParkingLotId(parkingLotId: number, tokenJwt: string):Promise<VehicleParkedResponseDto[]>{
-        if(await this.isRolSocio(tokenJwt)) await this.verifyPartnerAuth(parkingLotId, tokenJwt);
-        if(!await this.parkingLotService.verifyExistParkingLot(parkingLotId)) throw new ErrorException("El parqueadero no existe", 404);
+    async getVehiclesParkedByParkingLotId(parkingLotId: number, tokenJwt: string): Promise<VehicleParkedResponseDto[]> {
+        if (await this.isRolSocio(tokenJwt)) await this.verifyPartnerAuth(parkingLotId, tokenJwt);
+        if (!await this.parkingLotService.verifyExistParkingLot(parkingLotId)) throw new ErrorException("El parqueadero no existe", 404);
 
         const parkingLotVehicles = await this.parkingLotVehicleRepository.findAllByParkingLotIdAndActiveEntryFlag(parkingLotId, true);
 
-        return parkingLotVehicles!.map((parkingLotVehicle)=>{
-           const vehicleParkedResponseDto = new VehicleParkedResponseDto();
-           vehicleParkedResponseDto.id = parkingLotVehicle.id;
-           vehicleParkedResponseDto.placa = parkingLotVehicle.vehicle.placa;
-           vehicleParkedResponseDto.entryDate = this.fechaUtils.convertirFechaUtcAColombia(parkingLotVehicle.createdEntry);
-           return vehicleParkedResponseDto;
+        return parkingLotVehicles!.map((parkingLotVehicle) => {
+            const vehicleParkedResponseDto = new VehicleParkedResponseDto();
+            vehicleParkedResponseDto.id = Number(parkingLotVehicle.id);
+            vehicleParkedResponseDto.placa = parkingLotVehicle.vehicle.placa;
+            vehicleParkedResponseDto.entryDate = this.fechaUtils.convertirFechaUtcAColombia(parkingLotVehicle.createdEntry);
+            return vehicleParkedResponseDto;
         });
     }
 
-    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTen(tokenJwt:string):Promise<IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto[]>{
+    async getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTen(tokenJwt: string): Promise<IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto[]> {
         let vehicles;
-         if(await this.isRolSocio(tokenJwt)) vehicles =await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(await this.tokenService.obtenerIdDesdeToken(tokenJwt));
-         else vehicles= await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin();
-        
-        return await Promise.all(vehicles.map( async (vehicleParkingLot) =>{
+        if (await this.isRolSocio(tokenJwt)) vehicles = await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenSocio(await this.tokenService.obtenerIdDesdeToken(tokenJwt));
+        else vehicles = await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredInDifferentParkingLotsLimitTenAdmin();
+
+        return await Promise.all(vehicles.map(async (vehicleParkingLot) => {
             const indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto = new IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto();
-            const vehicle =  await this.vehicleServie.getVehicleById(vehicleParkingLot.vehicle_id);
-            if(!vehicle) throw new ErrorException("El vehiculo no existe", 409);
+            const vehicle = await this.vehicleServie.getVehicleById(vehicleParkingLot.vehicle_id);
+            if (!vehicle) throw new ErrorException("El vehiculo no existe", 409);
+            vehicle.id = Number(vehicle.id);
             indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto.vehicle = vehicle;
             indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto.quantityTimesRegistered = Number(vehicleParkingLot.cantidadVecesRegistrado);
 
             return indicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto;
+        }));
+    }
+
+    async getVehiclesMoreTimesRegisteredByParkingLotId(parkingLotId: number, tokenJwt: string): Promise<IndicatorVehiclesMoreTimesRegisteredResponseDto[]> {
+        if (await this.isRolSocio(tokenJwt)) await this.verifyPartnerAuth(parkingLotId, tokenJwt);
+
+        const parkingLot = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(parkingLotId));
+        if (!parkingLot) throw new ErrorException("El parqueadero no existe", 404);
+
+        let vehicles = await this.parkingLotVehicleRepository.getVehiclesMoreTimesRegisteredByParkingLotId(parkingLotId);
+
+        return await Promise.all(vehicles.map(async (vehicleParkingLot) => {
+            const indicatorVehiclesMoreTimesRegisteredResponseDto = new IndicatorVehiclesMoreTimesRegisteredResponseDto();
+            const vehicle = await this.vehicleServie.getVehicleById(vehicleParkingLot.vehicle_id);
+            if (!vehicle) throw new ErrorException("El vehiculo no existe", 409);
+            vehicle.id = Number(vehicle.id);
+            indicatorVehiclesMoreTimesRegisteredResponseDto.vehicle = vehicle;
+            const parkingLot = await this.parkingLotService.findParkingLotById(vehicleParkingLot.parking_lot_id);
+            if (!parkingLot) throw new ErrorException("El parqueadero no existe", 409);
+            indicatorVehiclesMoreTimesRegisteredResponseDto.nameParkingLot = parkingLot.name;
+            indicatorVehiclesMoreTimesRegisteredResponseDto.quantityTimesRegistered = vehicleParkingLot.cantidadVecesRegistrado;
+            return indicatorVehiclesMoreTimesRegisteredResponseDto;
         }));
     }
 
@@ -159,7 +182,7 @@ export class ParkingLotVehicleService {
         return idPartnerAuth;
     }
 
-    private async isRolSocio(tokenJwt: string):Promise<boolean>{
+    private async isRolSocio(tokenJwt: string): Promise<boolean> {
         if (!tokenJwt) throw new ErrorException("No existe el token JWT", 409);
         const rolPartnerAuth = await this.tokenService.getRolFromToken(tokenJwt);
         return rolPartnerAuth === "SOCIO";

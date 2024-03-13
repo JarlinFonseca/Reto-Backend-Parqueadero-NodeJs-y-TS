@@ -98,7 +98,7 @@ export class ParkingLotService {
 
         const parkingLotsPartners = await this.parkingLotRepository.findAllParkingLotByUserId(idPartnerAuth);
 
-        return parkingLotsPartners!.map((parkingLot) =>{
+        return parkingLotsPartners.map((parkingLot) =>{
             const parkingLotPartnerResponseDto: ParkingLotPartnerResponseDto = new ParkingLotPartnerResponseDto();
             parkingLotPartnerResponseDto.id= Number(parkingLot.id);
             parkingLotPartnerResponseDto.name = parkingLot.name;

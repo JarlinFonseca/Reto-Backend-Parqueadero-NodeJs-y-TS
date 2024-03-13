@@ -79,6 +79,18 @@ export class SharedMiddleware extends ErrorHandlerMiddleware {
             throw new ErrorException("No tienes permisos de acceso", 403);
         }
         return next();
+    }
 
+    checkRoles(allowedRoles: RoleType[]) {
+        return (req: Request, res: Response, next: NextFunction) => {
+            console.log("Check roles");
+
+            const user = req.user as UserTokenResponseDto;
+
+            if (!allowedRoles.includes(user.rol as RoleType)) {
+                throw new ErrorException("No tienes permisos de acceso", 403);
+            }
+            return next();
+        };
     }
 }
