@@ -161,6 +161,37 @@ export class ParkingLotVehicleService {
         }));
     }
 
+    async getVehiclesParkedByCoincidence(placa: string, tokenJwt: string): Promise<VehicleParkedResponseDto[]> {
+        let vehicles = await this.parkingLotVehicleRepository.getVehiclesParkedByCoincidence(placa);
+        if (await this.isRolSocio(tokenJwt)) {
+            const idPartnerAuth = await this.tokenService.obtenerIdDesdeToken(tokenJwt);
+            const parkingLotsPartner = await this.parkingLotRepository.findAllParkingLotByUserId(idPartnerAuth);
+            if (parkingLotsPartner.length <= 0) throw new ErrorException("No hay coincidencias de placas de vehiculos de acuerdo a lo ingresado.", 404);
+
+            const idsParkingLots = parkingLotsPartner.map((parkingLot) => parkingLot.id);
+            vehicles = await this.parkingLotVehicleRepository.getVehiclesByCoincidencePlacaAndParkingLots(placa, idsParkingLots);
+        } else {
+            vehicles = await this.parkingLotVehicleRepository.getVehiclesParkedByCoincidence(placa);
+        }
+
+        if (vehicles.length === 0) {
+            throw new ErrorException("No hay coincidencias de placas de vehiculos de acuerdo a lo ingresado.", 404);
+        }
+
+        return await Promise.all(vehicles.map(async (vehicle) => {
+            const vehicleParkedResponseDto = new VehicleParkedResponseDto();
+            const parkingLotVehicle = await (await this.parkingLotVehicleRepository.execRepository).findOneBy({ id: vehicle.id });
+            if (!parkingLotVehicle) throw new ErrorException("No existe el vehiculo en el parqueadero.", 404);
+            vehicleParkedResponseDto.id = parkingLotVehicle.id;
+            vehicleParkedResponseDto.placa = vehicle.placa;
+            vehicleParkedResponseDto.entryDate = this.fechaUtils.convertirFechaUtcAColombia(vehicle.created_entry);
+
+            return vehicleParkedResponseDto;
+        }));
+
+
+    }
+
     private getHours(entryDate: Date, departureDate: Date) {
         const initialTime = entryDate.getTime();
         const finalTime = departureDate.getTime();

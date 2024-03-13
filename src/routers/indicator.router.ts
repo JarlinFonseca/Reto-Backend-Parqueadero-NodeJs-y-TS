@@ -30,6 +30,20 @@ export class IndicatorRouter extends BaseRouter<IndicatorController, IndicatorMi
             (req, res, next) => this.controller.getVehiclesParkedForFirstTimeByParkingLotId(req, res, next)
           );
 
+          this.router.get(
+            "/indicadores/parqueaderos/:id/ganancias",
+            (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+             this.middleware.checkRoles([RoleType.SOCIO]),
+            (req, res, next) => this.controller.getProfits(req, res, next)
+          );
+
+          this.router.get(
+            "/indicadores/vehiculos/:placa/coincidencias",
+            (req, res, next) => this.middleware.passAuth("jwt", req, res, next),
+             this.middleware.checkRoles([RoleType.SOCIO, RoleType.ADMIN]),
+            (req, res, next) => this.controller.getVehiclesParkedByCoincidence(req, res, next)
+          );
+
 
     }
 

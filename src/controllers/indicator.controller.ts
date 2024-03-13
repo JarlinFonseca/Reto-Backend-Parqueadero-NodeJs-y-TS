@@ -28,7 +28,7 @@ export class IndicatorController {
 
     }
 
-    getVehiclesMoreTimesRegisteredByParkingLotId(req: Request, res: Response, next: NextFunction){
+    getVehiclesMoreTimesRegisteredByParkingLotId(req: Request, res: Response, next: NextFunction) {
         try {
             const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
             if (!tokenJwt) {
@@ -46,7 +46,7 @@ export class IndicatorController {
 
     }
 
-    getVehiclesParkedForFirstTimeByParkingLotId(req: Request, res: Response, next: NextFunction){
+    getVehiclesParkedForFirstTimeByParkingLotId(req: Request, res: Response, next: NextFunction) {
         try {
             const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
             if (!tokenJwt) {
@@ -55,6 +55,40 @@ export class IndicatorController {
             const { id } = req.params;
 
             this.historyService.getVehiclesParkedForFirstTimeByParkingLotId(Number(id), tokenJwt)
+                .then((data) => { return this.httpResponse.Ok(res, data) })
+                .catch((err) => next(err));
+        } catch (err) {
+            next(err);
+        }
+
+    }
+
+    getProfits(req: Request, res: Response, next: NextFunction) {
+        try {
+            const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
+            if (!tokenJwt) {
+                throw new ErrorException("Token JWT no proporcionado", 409);
+            }
+            const { id } = req.params;
+
+            this.historyService.getProfits(Number(id), tokenJwt)
+                .then((data) => { return this.httpResponse.Ok(res, data) })
+                .catch((err) => next(err));
+        } catch (err) {
+            next(err);
+        }
+
+    }
+
+    getVehiclesParkedByCoincidence(req: Request, res: Response, next: NextFunction){
+        try {
+            const tokenJwt = req.headers.authorization?.replace('Bearer', '').trim();
+            if (!tokenJwt) {
+                throw new ErrorException("Token JWT no proporcionado", 409);
+            }
+            const { placa } = req.params;
+
+            this.parkingLotVehicleService.getVehiclesParkedByCoincidence(placa, tokenJwt)
                 .then((data) => { return this.httpResponse.Ok(res, data) })
                 .catch((err) => next(err));
         } catch (err) {

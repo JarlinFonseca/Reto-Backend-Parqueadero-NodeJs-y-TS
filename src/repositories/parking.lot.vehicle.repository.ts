@@ -115,8 +115,38 @@ export class ParkingLotVehicleRepositoty extends BaseRepository<ParkingLotVehicl
         const result = await entityManager.query(query, [parkingLotId]);
 
         return result;
-
     }
+
+    async getVehiclesParkedByCoincidence(placa: string):Promise<{ id: number, placa: string, created_entry: Date }[]>{
+        const entityManager = (await this.execRepository)
+        const query = `
+        SELECT pv.id, v.placa, pv.created_entry  
+        FROM parking_lots_vehicles  pv JOIN vehicles  v 
+        ON (pv.vehicle_id =v.id) 
+        WHERE pv.active_entry_flag =true AND v.placa like $1
+      `;
+        const result = await entityManager.query(query, [`%${placa}%`]);
+
+        return result;
+    }
+
+    async  getVehiclesByCoincidencePlacaAndParkingLots(placa: string, idsParqueaderos: number[]): Promise<{ id: number, placa: string, created_entry: Date }[]> {
+        const entityManager = (await this.execRepository)
+        const query = `
+            SELECT pv.id, v.placa, pv.created_entry  
+            FROM parking_lots_vehicles pv 
+            JOIN vehicles v ON pv.vehicle_id = v.id
+            WHERE pv.active_entry_flag = true AND v.placa LIKE $1 
+            AND pv.parking_lot_id IN (${idsParqueaderos.map((_, index) => `$${index + 2}`).join(', ')})
+        `;
+
+        const parameters = [`%${placa}%`, ...idsParqueaderos];
+        const result = await entityManager.query(query, parameters);
+    
+        return result;
+    }
+
+
 }
 
 
