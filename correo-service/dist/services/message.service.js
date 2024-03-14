@@ -31,7 +31,6 @@ class MessageService {
             messageInfoResponseDto.dateSent = this.fechaUtils.convertirFechaUtcAColombia(message.dateSent);
             return messageInfoResponseDto;
         });
-        console.log(messageList);
         return new history_mail_response_dto_1.HistoryMailResponseDto(messagesColombia, quantityEmailSend);
     }
 }

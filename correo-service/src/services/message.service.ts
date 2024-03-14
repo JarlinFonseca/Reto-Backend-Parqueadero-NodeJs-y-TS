@@ -36,11 +36,7 @@ export class MessageService {
             return messageInfoResponseDto;
         });
 
-
-        console.log(messageList);
-
         return new HistoryMailResponseDto(messagesColombia, quantityEmailSend);
-
 
     }
 

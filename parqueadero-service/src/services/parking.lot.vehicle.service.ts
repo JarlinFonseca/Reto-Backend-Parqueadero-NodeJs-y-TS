@@ -1,12 +1,15 @@
 ﻿import { EntryVehicleParkingLotRequestDto } from "../dto/request/entry.vehicle.parking.lot.request.dto";
 import { ExitVehicleParkingLotRequestDto } from "../dto/request/exit.vehicle.parking.lot.request.dto";
+import { MessageRequestDto } from "../dto/request/message.request.dto";
 import { EntryVehicleParkingLotResponseDto } from "../dto/response/entry.vehicle.parking.lot.response.dto";
 import { ExitVehicleParkingLotResponseDto } from "../dto/response/exit.vehicle.parking.lot.response.dto";
 import { IndicatorVehiclesMoreTimesRegisteredDifferentParkingLotsResponseDto } from "../dto/response/indicator.vehicles.more.times.registered.different.parking.lots.response.dto";
 import { IndicatorVehiclesMoreTimesRegisteredResponseDto } from "../dto/response/indicator.vehicles.more.times.registered.response.dto";
 import { VehicleParkedResponseDto } from "../dto/response/vehicle.parked.response.dto";
 import { HistoryEntity } from "../entities/history.entity";
+import { ParkingLotEntity } from "../entities/parking.lot.entity";
 import { ParkingLotVehicleEntity } from "../entities/parking.lot.vehicle.entity";
+import { VehicleEntity } from "../entities/vehicle.entity";
 import { ErrorException } from "../exceptions/ErrorException";
 import { ParkingLotRepository } from "../repositories/parking.lot.repository";
 import { ParkingLotVehicleRepositoty } from "../repositories/parking.lot.vehicle.repository";
@@ -17,6 +20,7 @@ import { HistoryService } from "./history.service";
 import { ParkingLotService } from "./parking.lot.service";
 import { TokenService } from "./token.service";
 import { VehicleService } from "./vehicle.service";
+import axios from 'axios';
 
 export class ParkingLotVehicleService {
 
@@ -37,10 +41,6 @@ export class ParkingLotVehicleService {
         const countMaxVehicles = (await this.parkingLotRepository.findParkingLotByIdWithRelationUser(entryVehicleParkingLotRequestDto.parkingLotId))!.quantityVehiclesMaximum;
         const currentVehicleQuantity = await this.parkingLotVehicleRepository.getCountVehiclesParkingLot(entryVehicleParkingLotRequestDto.parkingLotId);
 
-        console.log(countMaxVehicles)
-        console.log(currentVehicleQuantity)
-
-        console.log((countMaxVehicles - Number(currentVehicleQuantity)) <= 0)
         const placa: string = entryVehicleParkingLotRequestDto.placa.toUpperCase();
 
         if ((countMaxVehicles - currentVehicleQuantity) <= 0) throw new ErrorException("El parqueadero ya esta lleno, la cantidad de vehiculos limite ha sido superada", 409);
@@ -64,8 +64,32 @@ export class ParkingLotVehicleService {
         const entryVehicleParkingLotResponseDto = new EntryVehicleParkingLotResponseDto();
         entryVehicleParkingLotResponseDto.id = vehicleSave.id;
 
+        await this.sendEmailAxios(this.saveDataMessageEmail(vehicleSave, parkingLot));
+        
+
         return entryVehicleParkingLotResponseDto;
 
+    }
+
+    private saveDataMessageEmail(vehicle: VehicleEntity, parkingLot: ParkingLotEntity) {
+        const messageRequestDto = new MessageRequestDto();
+        messageRequestDto.email = parkingLot.user.email;
+        messageRequestDto.description = "Vehiculo parqueado correctamente";
+        messageRequestDto.parkingLotName = parkingLot.name;
+        messageRequestDto.placa = vehicle.placa;
+        return messageRequestDto;
+    }
+
+    private async sendEmailAxios(messageRequestDto: MessageRequestDto): Promise<void> {
+        try {
+            const response = await axios.post('http://localhost:8086/api/v1/correos', messageRequestDto);
+            console.log('Correo enviado correctamente');
+            console.log('Respuesta:', response.data);
+        } catch (error:any) {
+            console.error(`Error al enviar el correo: ${error.errors[0].message}`, error);
+          //Se lanza excepcion si quiero mostrar el error: 
+          //throw new ErrorException(`Error al enviar el correo: ${error.errors[0].message}`, 409);
+        }
     }
 
     async registerVehicleExit(exitVehicleParkingLotRequestDto: ExitVehicleParkingLotRequestDto, tokenJwt: string): Promise<ExitVehicleParkingLotResponseDto> {
