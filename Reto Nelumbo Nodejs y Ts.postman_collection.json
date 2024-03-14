@@ -7,62 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Get users",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlkIjoiMjYiLCJuYW1lIjoiQWRtaW4iLCJyb2wiOiJBRE1JTiIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1Ga2JXbHVRRzFoYVd3dVkyOXRJaXdpYVdRaU9pSXlOaUlzSW01aGJXVWlPaUpCWkcxcGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpFaUxDSnVZVzFsSWpvaVFVUk5TVTRpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQkJSRTFKVGlKOUxDSnBZWFFpT2pFM01UQXlOak00TURnc0ltVjRjQ0k2TVRjeE1ESTROVFF3T0gwLnJCb0hTOHdRekpQRU5EUjR6TjBmS1RwMFJlb2Y3c2RZVE1HNXpaaG12aFEiLCJpYXQiOjE3MTAyNjM4MDgsImV4cCI6MTcxMDI4NTQwOH0.CgjdAPCkNwJzw12znEy79YbVhtmtkaTd8XaZ2aYg9LY",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8085/api/v1/users",
-							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"v1",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get user by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8085/api/v1/users/7",
-							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"7"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "ADMIN",
 			"item": [
 				{
@@ -767,7 +711,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdWFrbkBnbWFpbC5jb20iLCJpZCI6IjEyIiwibmFtZSI6Ikp1YW4iLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1wMVlXdHVRR2R0WVdsc0xtTnZiU0lzSW1sa0lqb2lNVElpTENKdVlXMWxJam9pU25WaGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpJaUxDSnVZVzFsSWpvaVUwOURTVThpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQlRUME5KVHlKOUxDSnBZWFFpT2pFM01UQTBOVEV6TmpVc0ltVjRjQ0k2TVRjeE1EUTNNamsyTlgwLkU1bXRGTFpoYXN5bFUzR2NKd1JpU09kemhRd3hlT0o1MGszUGhFZGFrcUEiLCJpYXQiOjE3MTA0NTEzNjUsImV4cCI6MTcxMDQ3Mjk2NX0.OOX285rYoXwAlx5YRuY3YdJOg2IBa1EOKCO3pz9UR7k",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdWFrbkBnbWFpbC5jb20iLCJpZCI6IjEyIiwibmFtZSI6Ikp1YW4iLCJyb2wiOiJTT0NJTyIsImlkZW50aWZpY2F0b3IiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGJXRnBiQ0k2SW1wMVlXdHVRR2R0WVdsc0xtTnZiU0lzSW1sa0lqb2lNVElpTENKdVlXMWxJam9pU25WaGJpSXNJbkp2YkNJNmV5SnBaQ0k2SWpJaUxDSnVZVzFsSWpvaVUwOURTVThpTENKa1pYTmpjbWx3ZEdsdmJpSTZJbEp2YkNCa1pTQlRUME5KVHlKOUxDSnBZWFFpT2pFM01UQTBOVFkyTXpjc0ltVjRjQ0k2TVRjeE1EUTNPREl6TjMwLko0QmFxQTMxOHMzbWRPa2c1OWtDMERJLXcxTUFnUzh1UjJMUllndUltcmMiLCJpYXQiOjE3MTA0NTY2MzcsImV4cCI6MTcxMDQ3ODIzN30.pQx5TgE7WgiuGTFRxjnYKs-C2qBfY86EmfNjUOg8w3E",
 									"type": "string"
 								}
 							]
@@ -776,7 +720,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"DML343\",\r\n    \"parkingLotId\": 11\r\n}",
+							"raw": "{\r\n    \"placa\": \"UOL546\",\r\n    \"parkingLotId\": 11\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -918,7 +862,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"jarlin@gmail.com\",\r\n    \"placa\": \"DML345\",\r\n    \"description\": \"Este es un mensaje de prueba \",\r\n    \"parkingLotName\": \"Parking 15 PRO max\"\r\n}",
+							"raw": "{\r\n    \"email\": \"jarlin@gmail.com\",\r\n    \"placa\": \"OJM565\",\r\n    \"description\": \"Este es un mensaje de prueba 77\",\r\n    \"parkingLotName\": \"Parking 15 PRO max -\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -947,7 +891,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8086/api/v1/correos?startDate=2024-03-14 15:09:00&endDate=2024-03-14 16:10:50",
+							"raw": "http://localhost:8086/api/v1/correos?startDate=2024-03-14 16:09:00&endDate=2024-03-14 18:10:50",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -961,11 +905,11 @@
 							"query": [
 								{
 									"key": "startDate",
-									"value": "2024-03-14 15:09:00"
+									"value": "2024-03-14 16:09:00"
 								},
 								{
 									"key": "endDate",
-									"value": "2024-03-14 16:10:50"
+									"value": "2024-03-14 18:10:50"
 								}
 							]
 						}
