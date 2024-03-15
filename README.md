@@ -121,7 +121,7 @@ MONGODB_URI=mongodb://localhost:27017/correodb
 ```
 
 ##### 6. Generar y ejecutar las migraciones para crear las tablas en la base de datos:
-Para generar las migraciones de las entidades debes colocar el siguiente comando:
+Para generar las migraciones de las entidades, debes crear una carpeta en src llamada migrations: `src/migrations`  y colocar el siguiente comando:
 ```sh
 npm run m:gen -- src/migrations/InitDB
 ```
@@ -130,7 +130,7 @@ Y para ejecutar esa migración generada debes ejecutar el siguiente comando:
 npm run m:run
 ```
 
-##### 6. Ejecutar y compilar ambos microservicios de Parqueadero y Correo
+##### 7. Ejecutar y compilar ambos microservicios de Parqueadero y Correo
 Finalmente nos ubicamos en la raiz de cada microservicio y ejecutamos el siguiente comando en cada microservicio para compilar y ejecutarlos:
 ```sh
 npm run start:dev
@@ -138,12 +138,12 @@ npm run start:dev
 ![micros corriendo](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-NodeJs-y-TS/assets/48332117/573d15c1-8d3a-459e-b668-8fd5f8872fc2)
 
 
-##### 7. Probar las diferentes funcionalidades importando la colección de Postman
+##### 8. Probar las diferentes funcionalidades importando la colección de Postman
 Luego que ambos microservicios se esten ejecutando, importas la colección de Postman que estará en este repositorio para que puedas probar las funcionalidades de ambos microservicios.
 
 NOTA: es importante que ambos corran para que no tenga errores, ya que el parqueadero usa una funcionalidad del correo.
 
-##### 8. Siempre debe loguearse para poder acceder a los demás endpoints
+##### 9. Siempre debe loguearse para poder acceder a los demás endpoints
 Al momento de probar las funcionalidades debe hacer login como ADMIN o SOCIO, depende de lo que vaya a probar para poder generar el token JWT y ese token lo pega en el apartado de Postman en Authorization->Bearer Token->Token o en Headers agregas en Key: Authorization y en Value: Bearer tokenJWT.
 
 ##### Ejemplo:
